@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922033622398",
+    "project_id": "v2-cap-arc-d2d54",
+    "storage_bucket": "v2-cap-arc-d2d54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922033622398:android:90d9a16ccf720cd85b772f",
+        "android_client_info": {
+          "package_name": "com.example.caparc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrRFbldBwhWyODmoR-ajb16bwnjdxzC5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
