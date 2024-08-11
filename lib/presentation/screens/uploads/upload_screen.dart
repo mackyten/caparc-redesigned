@@ -1,6 +1,16 @@
 import 'package:caparc/common/values.dart';
+import 'package:caparc/common/widgets/buttons.dart';
+import 'package:caparc/common/widgets/date_form_field.dart';
+import 'package:caparc/common/widgets/text_form_field.dart';
+import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/presentation/screens/uploads/widgets/steps.dart';
+import 'package:caparc/services/firebase_queries.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:ming_cute_icons/ming_cute_icons.dart';
+
+import 'widgets/upload_details_form.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -11,7 +21,15 @@ class UploadScreen extends StatefulWidget {
 
 class _UploadScreenState extends State<UploadScreen> {
   late Size screenSize;
-  int noOfSteps = 3;
+  bool isVerifying = false;
+  int currentStep = 0;
+  List<Step> steps = [];
+  final _step1FormKey = GlobalKey<FormState>();
+
+  ProjectModel data = ProjectModel(
+    id: "",
+    createdAt: DateTime.now(),
+  );
 
   @override
   void didChangeDependencies() {
@@ -21,112 +39,109 @@ class _UploadScreenState extends State<UploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double progress = 1;
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(bodyPadding),
-        height: screenSize.height,
-        width: screenSize.width,
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Stack(
-              children: [
-                SizedBox(
-                  height: 20,
-                  child: Center(
-                    child: Stack(
+            Container(
+              width: screenSize.width,
+              height: screenSize.height,
+              child: Stepper(
+                onStepContinue: _onContinue,
+                onStepCancel: () {
+                  if (currentStep > 0) {
+                    setState(() {
+                      currentStep--;
+                    });
+                  }
+                },
+                type: StepperType.horizontal,
+                elevation: 0,
+                currentStep: currentStep,
+                controlsBuilder: (context, details) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          width: screenSize.width,
-                          height: 6,
-                          decoration: BoxDecoration(
-                              color: CAColors.disabledFields,
-                              borderRadius: BorderRadius.circular(6)),
-                        ),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          width:
-                              (screenSize.width - (bodyPadding * 2)) * progress,
-                          height: 6,
-                          decoration: BoxDecoration(
-                              color: CAColors.success,
-                              borderRadius: BorderRadius.circular(6)),
-                        ),
+                        _continueButton(details.onStepContinue!),
+                        if (currentStep > 0)
+                          Buttons.cancelButton(details.onStepCancel!)
                       ],
                     ),
+                  );
+                },
+                steps: [
+                  UploadsSteps.step1(
+                    formKey: _step1FormKey,
+                    currentStep: currentStep,
+                    isVerifying: isVerifying,
+                    onChange: (val) {
+                      setState(() {
+                        data.title = val;
+                      });
+                    },
+                    validator: (val) {
+                      if (val == null ||
+                          data.title == null ||
+                          val.isEmpty ||
+                          data.title!.isEmpty) {
+                        return "Please enter your title.";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        color: progress > 0.33
-                            ? CAColors.success
-                            : CAColors.deactivated,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      height: 20,
-                      width: 20,
-                      child: Center(
-                        child: progress > 0.33
-                            ? const Icon(
-                                Icons.check,
-                                size: 12,
-                                color: CAColors.white,
-                              )
-                            : Container(),
-                      ),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        color: progress >= 0.66
-                            ? CAColors.success
-                            : CAColors.deactivated,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      height: 20,
-                      width: 20,
-                      child: Center(
-                        child: progress >= 0.66
-                            ? const Icon(
-                                Icons.check,
-                                size: 12,
-                                color: CAColors.white,
-                              )
-                            : Container(),
-                      ),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        color: progress >= 1
-                            ? CAColors.success
-                            : CAColors.deactivated,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      height: 20,
-                      width: 20,
-                      child: Center(
-                        child: progress >= 1
-                            ? const Icon(
-                                Icons.check,
-                                size: 12,
-                                color: CAColors.white,
-                              )
-                            : Container(),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+
+                  // Step(
+                  //   isActive: currentStep == 1,
+                  //   title: Text("Details"),
+                  //   content: UploadDetailsForm(
+                  //     initialData: data,
+                  //   ),
+                  // ),
+
+                  UploadsSteps.step2(
+                    isActive: currentStep == 1,
+                    data: data,
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
+  }
+
+  Widget _continueButton(VoidCallback onTap) {
+    if (currentStep == 0) {
+      return Buttons.verifyButton(onTap: onTap, isVerifying: isVerifying);
+    } else if (currentStep == 1) {
+      return Buttons.continueButton(onTap: onTap);
+    }
+
+    return Container();
+  }
+
+  void _onContinue() async {
+    if (currentStep == 0) {
+      if (_step1FormKey.currentState!.validate()) {
+        setState(() => isVerifying = true);
+        final bool isExisting =
+            await FirebaseQueries.checkTitleIfExists(data.title!);
+        if (isExisting) {
+          //TODO: ADD AN ERROR MODAL;
+          print("Title already exists.");
+          return;
+        }
+
+        await Future.delayed(const Duration(seconds: 2)).then((_) {
+          setState(() {
+            isVerifying = false;
+            currentStep++;
+          });
+        });
+      }
+    }
   }
 }

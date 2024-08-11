@@ -2,32 +2,32 @@ import 'package:caparc/common/models/base_model.dart';
 import 'package:caparc/data/models/user_model.dart';
 
 class ProjectModel extends BaseModel {
-  String title;
-  String createdById;
-  List<String> authorNames;
-  List<UserModel> authorAccounts;
-  List<UserModel> viewedBy;
-  List<UserModel> downloadedBy;
-  List<UserModel> favoriteBy;
-  DateTime approvedOn;
-  List<String> keywords;
-  String abstract;
-  String file;
+  String? title;
+  String? createdById;
+  List<String>? authorNames;
+  List<UserModel>? authorAccounts;
+  List<UserModel>? viewedBy;
+  List<UserModel>? downloadedBy;
+  List<UserModel>? favoriteBy;
+  DateTime? approvedOn;
+  List<String>? keywords;
+  String? abstract;
+  String? file;
 
   ProjectModel(
       {required String id,
       required DateTime createdAt,
-      required this.title,
-      required this.createdById,
-      required this.authorNames,
-      required this.authorAccounts,
-      required this.viewedBy,
-      required this.downloadedBy,
-      required this.favoriteBy,
-      required this.approvedOn,
-      required this.keywords,
-      required this.abstract,
-      required this.file})
+      this.title,
+      this.createdById,
+      this.authorNames,
+      this.authorAccounts,
+      this.viewedBy,
+      this.downloadedBy,
+      this.favoriteBy,
+      this.approvedOn,
+      this.keywords,
+      this.abstract,
+      this.file})
       : super(id: id, createdAt: createdAt);
 
   @override
