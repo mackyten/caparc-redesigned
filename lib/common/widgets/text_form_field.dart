@@ -8,6 +8,7 @@ class CATextFormField extends StatefulWidget {
   final Widget? prefix;
   final Function(String?)? onChange;
   final bool? enabled;
+  final int? minLine;
 
   const CATextFormField(
       {super.key,
@@ -17,7 +18,8 @@ class CATextFormField extends StatefulWidget {
       this.controller,
       this.onChange,
       this.prefix,
-      this.enabled});
+      this.enabled,
+      this.minLine = 1});
 
   @override
   State<CATextFormField> createState() => _CATextFormFieldState();
@@ -55,6 +57,8 @@ class _CATextFormFieldState extends State<CATextFormField> {
       enabled: widget.enabled,
       initialValue: widget.initialValue,
       onChanged: widget.onChange,
+      minLines: widget.minLine,
+      maxLines: widget.minLine,
       decoration: InputDecoration(
         prefixIcon: widget.prefix,
         labelText: widget.labelText,
