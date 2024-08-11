@@ -43,6 +43,12 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> toJsonIdOnly() {
+    return {
+      'id': id,
+    };
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
         id: json['id'],
@@ -56,5 +62,27 @@ class UserModel {
         accountStatus: AccountStatus.values[json['accountStatus']],
         email: json['email'],
         password: json['password'] ?? '');
+  }
+
+  String getFullName() {
+    List<String> nameParts = [];
+
+    if (prefix != null && prefix!.isNotEmpty) {
+      nameParts.add(prefix!);
+    }
+
+    nameParts.add(firstname);
+
+    if (middlename != null && middlename!.isNotEmpty) {
+      nameParts.add(middlename!);
+    }
+
+    nameParts.add(lastname);
+
+    if (suffix != null && suffix!.isNotEmpty) {
+      nameParts.add(suffix!);
+    }
+
+    return nameParts.join(' ');
   }
 }

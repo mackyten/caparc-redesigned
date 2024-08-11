@@ -15,7 +15,6 @@ class UploadsSteps {
     return Step(
       isActive: currentStep == 0,
       title: Container(color: Colors.amber, child: Text("Title Verification")),
-      subtitle: const Text("Subtitle must be unique."),
       content: Form(
         key: formKey,
         child: SizedBox(
@@ -45,12 +44,24 @@ class UploadsSteps {
     );
   }
 
-  static Step step2({required bool isActive, required ProjectModel data}) {
+  static Step step2({
+    required bool isActive,
+    required ProjectModel data,
+    required Function(ProjectModel) onChanged,
+  }) {
     return Step(
         isActive: isActive,
         title: Text("Details"),
         content: UploadDetailsForm(
           initialData: data,
+          onChanged: onChanged,
         ));
+  }
+
+  static Step step3({
+    required bool isActive,
+  }) {
+    return Step(
+        isActive: isActive, title: Text("Review"), content: Container());
   }
 }

@@ -9,7 +9,13 @@ import 'package:ming_cute_icons/ming_cute_icons.dart';
 
 class UploadDetailsForm extends StatefulWidget {
   final ProjectModel initialData;
-  const UploadDetailsForm({super.key, required this.initialData});
+  final Function(ProjectModel) onChanged;
+
+  const UploadDetailsForm({
+    super.key,
+    required this.initialData,
+    required this.onChanged,
+  });
 
   @override
   State<UploadDetailsForm> createState() => _UploadDetailsFormState();
@@ -49,22 +55,47 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
-                    text: TextSpan(
-                  style: const TextStyle(
-                    color: CAColors.accent,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 18,
+                  text: TextSpan(
+                    style: const TextStyle(
+                      color: CAColors.accent,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
+                    ),
+                    children: [
+                      const TextSpan(
+                        text: "Title: ",
+                      ),
+                      TextSpan(
+                        text: data.title ?? "<TITLE IS MISSING>",
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ],
                   ),
-                  children: [
-                    const TextSpan(
-                      text: "TITLE:",
+                ),
+
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      color: CAColors.accent,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
                     ),
-                    TextSpan(
-                      text: data.title ?? "<TITLE IS MISSING>",
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                )),
+                    children: [
+                      const TextSpan(
+                        text: "Authors: ",
+                      ),
+                      ...List.generate(data.authorAccounts?.length ?? 0,
+                          (index) {
+                        final author = data.authorAccounts![index];
+                        return TextSpan(
+                          text:
+                              "${author.getFullName()} ${author != data.authorAccounts!.last ? ", " : ""}",
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        );
+                      })
+                    ],
+                  ),
+                ),
 
                 // CATextFormField(
                 //   labelText: "Title",
@@ -82,6 +113,7 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
                   label: "Date Approved",
                   onPicked: (DateTime val) {
                     data.approvedOn = val;
+                    widget.onChanged(data);
                   },
                   validator: (val) {
                     if (val == null || val.isEmpty || data.approvedOn == null) {
@@ -93,15 +125,22 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
 
                 //TODO: Make Searcheable for Users
                 Spacers.formFieldSpacers(),
-                CATextFormField(labelText: "Authors", onChange: (val){
-
-                  // setState(() {
-                  //   data.a
-                  // });
-                },),
+                CATextFormField(
+                  labelText: "Abstract",
+                  minLine: 5,
+                  onChange: (val) {
+                    data.abstract = val;
+                    widget.onChanged(data);
+                  },
+                  validator: (val) {
+                    if (val == null || val.isEmpty || data.abstract == null) {
+                      return "This field is required";
+                    }
+                    return null;
+                  },
+                ),
 
                 Spacers.formFieldSpacers()
-                
               ],
             ),
           ),

@@ -37,7 +37,7 @@ class ProjectModel extends BaseModel {
       'title': title,
       'createdById': createdById,
       'authorNames': authorNames,
-      'authorAccounts': authorAccounts,
+      'authorAccounts': authorAccounts?.map((e) => e.id).toList(),
       'viewedBy': viewedBy,
       'downloadedBy': downloadedBy,
       'favoriteBy': favoriteBy,
