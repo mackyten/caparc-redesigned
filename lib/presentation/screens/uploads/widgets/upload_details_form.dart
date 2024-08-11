@@ -101,7 +101,7 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
                 },),
 
                 Spacers.formFieldSpacers()
-                ///CHECH
+                
               ],
             ),
           ),
