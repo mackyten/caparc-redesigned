@@ -7,14 +7,10 @@ import 'package:caparc/common/widgets/snackbar.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:caparc/common/enums/account_status.dart';
 import 'package:caparc/data/models/user_model.dart';
-import 'package:caparc/presentation/ca_colors.dart';
 import 'package:caparc/presentation/screens/auth_screen/firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterScreeen extends StatefulWidget {
@@ -156,7 +152,7 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                 SizedBox(
                   height: bodyPadding,
                 ),
-                ElevatedButton(onPressed: _register, child: Text('Register'))
+                ElevatedButton(onPressed: _register, child: const Text('Register'))
               ],
             ),
           ),

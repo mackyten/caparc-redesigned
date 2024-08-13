@@ -1,5 +1,6 @@
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:caparc/data/models/project_model.dart';
+import 'package:caparc/presentation/screens/uploads/widgets/review.dart';
 import 'package:caparc/presentation/screens/uploads/widgets/upload_details_form.dart';
 import 'package:flutter/material.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
@@ -60,8 +61,9 @@ class UploadsSteps {
 
   static Step step3({
     required bool isActive,
+    required ProjectModel item,
   }) {
     return Step(
-        isActive: isActive, title: Text("Review"), content: Container());
+        isActive: isActive, title: Text("Review"), content: Review(item: item));
   }
 }
