@@ -72,6 +72,75 @@ class Buttons {
     );
   }
 
+  static Widget sumbitButton({
+    required VoidCallback onTap,
+    bool? isVerifying,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+            //padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+            decoration: BoxDecoration(
+                color: CAColors.primary,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.30),
+                      offset: const Offset(0, 3),
+                      blurRadius: 5)
+                ]),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      child: isVerifying == true
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator.adaptive(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    CAColors.secondary),
+                              ),
+                            )
+                          : const Icon(
+                              MingCuteIcons.mgc_check_2_fill,
+                              color: CAColors.secondary,
+                            ),
+                    ),
+                  ),
+                ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  height: 40,
+                  width: isVerifying == true ? 120 : 100,
+                  padding: const EdgeInsets.only(left: 10, right: 20),
+                  child: Center(
+                    child: Text(
+                      isVerifying == true ? "SUBMITTING" : "SUBMIT",
+                      maxLines: 1,
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+    );
+  }
+
   static Widget continueButton({
     required VoidCallback onTap,
     bool? isLoading,
@@ -141,7 +210,7 @@ class Buttons {
     );
   }
 
-  static Widget cancelButton(VoidCallback ontap) {
+  static Widget cancelButton({required VoidCallback ontap, String? label}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -153,10 +222,10 @@ class Buttons {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
           ),
-          child: const Center(
+          child: Center(
             child: Text(
-              "CANCEL",
-              style: TextStyle(color: Colors.grey, letterSpacing: 2),
+              label ?? "CANCEL",
+              style: const TextStyle(color: Colors.grey, letterSpacing: 2),
             ),
           ),
         ),

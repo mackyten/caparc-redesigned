@@ -1,11 +1,7 @@
 import 'package:caparc/bloc/counter_bloc.dart';
-import 'package:caparc/bloc/counter_event.dart';
-import 'package:caparc/bloc/counter_state.dart';
 import 'package:caparc/blocs/bottom_nav_bar_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/firebase_options.dart';
-import 'package:caparc/presentation/screens/auth_screen/wrapper.dart';
-import 'package:caparc/presentation/screens/landing_page.dart';
 import 'package:caparc/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

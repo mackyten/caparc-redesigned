@@ -13,4 +13,9 @@ class CAColors {
   static const Color placeholder = Color(0xffa1a1a1);
   static const Color deactivated = Color.fromARGB(255, 158, 158, 158);
   static const Color disabledFields = Color(0xffdcdcdc);
+
+  static const Color textHigh = Colors.black87;
+  static Color textMed = Colors.black.withOpacity(0.60);
+  static const Color textLow = Colors.black38;
+  static Color shadow = Colors.black.withOpacity(.10);
 }

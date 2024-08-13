@@ -91,7 +91,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       children: [
                         _continueButton(details.onStepContinue!),
                         if (currentStep > 0)
-                          Buttons.cancelButton(details.onStepCancel!)
+                          Buttons.cancelButton(ontap: details.onStepCancel!, label: "RETURN")
                       ],
                     ),
                   );
@@ -116,15 +116,6 @@ class _UploadScreenState extends State<UploadScreen> {
                       return null;
                     },
                   ),
-
-                  // Step(
-                  //   isActive: currentStep == 1,
-                  //   title: Text("Details"),
-                  //   content: UploadDetailsForm(
-                  //     initialData: data,
-                  //   ),
-                  // ),
-
                   UploadsSteps.step2(
                     isActive: currentStep == 1,
                     data: data,
@@ -134,8 +125,10 @@ class _UploadScreenState extends State<UploadScreen> {
                       });
                     },
                   ),
-
-                  UploadsSteps.step3(isActive: currentStep == 2)
+                  UploadsSteps.step3(
+                    isActive: currentStep == 2,
+                    item: data,
+                  )
                 ],
               ),
             )
@@ -150,9 +143,9 @@ class _UploadScreenState extends State<UploadScreen> {
       return Buttons.verifyButton(onTap: onTap, isVerifying: isVerifying);
     } else if (currentStep == 1) {
       return Buttons.continueButton(onTap: onTap);
+    } else {
+      return Buttons.sumbitButton(onTap: onTap);
     }
-
-    return Container();
   }
 
   void _onContinue() async {
@@ -178,6 +171,8 @@ class _UploadScreenState extends State<UploadScreen> {
       setState(() {
         currentStep++;
       });
+      print(data.toJson());
+    } else {
       print(data.toJson());
     }
   }
