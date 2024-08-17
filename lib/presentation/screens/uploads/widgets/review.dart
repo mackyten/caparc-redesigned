@@ -5,7 +5,12 @@ import 'package:intl/intl.dart';
 
 class Review extends StatefulWidget {
   final ProjectModel item;
-  const Review({super.key, required this.item});
+  final double bottomNavBarHeight;
+  const Review({
+    super.key,
+    required this.item,
+    required this.bottomNavBarHeight,
+  });
 
   @override
   State<Review> createState() => _ReviewState();
@@ -38,7 +43,8 @@ class _ReviewState extends State<Review> {
       child: LayoutBuilder(builder: (context, constraints) {
         return Container(
           constraints: BoxConstraints(
-              maxHeight: screenSize.height - 310, minHeight: 100),
+              maxHeight: (screenSize.height - widget.bottomNavBarHeight) - 380,
+              minHeight: 100),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -63,7 +69,7 @@ class _ReviewState extends State<Review> {
                 ),
                 Container(
                   constraints: BoxConstraints(
-                    maxHeight: screenSize.height - 400,
+                    maxHeight: (screenSize.height - 400),
                   ),
                   padding: const EdgeInsets.all(10),
                   width: double.infinity,
@@ -149,7 +155,7 @@ class _ReviewState extends State<Review> {
                           style: title,
                         ),
                         Text(
-                          widget.item.abstract ?? "",
+                          widget.item.projectAbstract ?? "",
                           style: value,
                         )
                       ],

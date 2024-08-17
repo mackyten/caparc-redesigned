@@ -11,7 +11,7 @@ class ProjectModel extends BaseModel {
   List<UserModel>? favoriteBy;
   DateTime? approvedOn;
   List<String>? keywords;
-  String? abstract;
+  String? projectAbstract;
   String? file;
 
   ProjectModel(
@@ -26,7 +26,7 @@ class ProjectModel extends BaseModel {
       this.favoriteBy,
       this.approvedOn,
       this.keywords,
-      this.abstract,
+      this.projectAbstract,
       this.file})
       : super(id: id, createdAt: createdAt);
 
@@ -43,7 +43,7 @@ class ProjectModel extends BaseModel {
       'favoriteBy': favoriteBy,
       'approvedOn': approvedOn,
       'keywords': keywords,
-      'abstract': abstract,
+      'projectAbstract': projectAbstract,
       'file': file
     };
   }
@@ -61,7 +61,37 @@ class ProjectModel extends BaseModel {
         favoriteBy: json['favoriteBy'],
         approvedOn: json['approvedOn'],
         keywords: json['keywords'],
-        abstract: json['abstract'],
+        projectAbstract: json['abstract'],
         file: json['file']);
+  }
+
+  ProjectModel copyWith({
+    String? title,
+    String? createdById,
+    List<String>? authorNames,
+    List<UserModel>? authorAccounts,
+    List<UserModel>? viewedBy,
+    List<UserModel>? downloadedBy,
+    List<UserModel>? favoriteBy,
+    DateTime? approvedOn,
+    List<String>? keywords,
+    String? abstract,
+    String? file,
+  }) {
+    return ProjectModel(
+      id: this.id,
+      createdAt: this.createdAt,
+      title: title ?? this.title,
+      createdById: createdById ?? this.createdById,
+      authorNames: authorNames ?? this.authorNames,
+      authorAccounts: authorAccounts ?? this.authorAccounts,
+      viewedBy: viewedBy ?? this.viewedBy,
+      downloadedBy: downloadedBy ?? this.downloadedBy,
+      favoriteBy: favoriteBy ?? this.favoriteBy,
+      approvedOn: approvedOn ?? this.approvedOn,
+      keywords: keywords ?? this.keywords,
+      projectAbstract: abstract ?? this.projectAbstract,
+      file: file ?? this.file,
+    );
   }
 }

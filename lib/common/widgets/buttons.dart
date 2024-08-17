@@ -74,7 +74,7 @@ class Buttons {
 
   static Widget sumbitButton({
     required VoidCallback onTap,
-    bool? isVerifying,
+    bool? isSubmitting,
   }) {
     return Material(
       color: Colors.transparent,
@@ -104,7 +104,7 @@ class Buttons {
                   child: Center(
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
-                      child: isVerifying == true
+                      child: isSubmitting == true
                           ? const SizedBox(
                               width: 20,
                               height: 20,
@@ -123,11 +123,11 @@ class Buttons {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   height: 40,
-                  width: isVerifying == true ? 120 : 100,
+                  width: isSubmitting == true ? 120 : 100,
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: Center(
                     child: Text(
-                      isVerifying == true ? "SUBMITTING" : "SUBMIT",
+                      isSubmitting == true ? "SUBMITTING..." : "SUBMIT",
                       maxLines: 1,
                       style: const TextStyle(
                         color: Colors.white,
@@ -210,7 +210,7 @@ class Buttons {
     );
   }
 
-  static Widget cancelButton({required VoidCallback ontap, String? label}) {
+  static Widget cancelButton({required VoidCallback? ontap, String? label}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(

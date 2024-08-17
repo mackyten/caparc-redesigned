@@ -10,52 +10,56 @@ class CATextFormField extends StatefulWidget {
   final bool? enabled;
   final int? minLine;
 
-  const CATextFormField(
-      {super.key,
-      required this.labelText,
-      this.validator,
-      this.initialValue,
-      this.controller,
-      this.onChange,
-      this.prefix,
-      this.enabled,
-      this.minLine = 1});
+  const CATextFormField({
+    super.key,
+    required this.labelText,
+    this.validator,
+    this.initialValue,
+    this.controller,
+    this.onChange,
+    this.prefix,
+    this.enabled,
+    this.minLine = 1,
+  });
 
   @override
   State<CATextFormField> createState() => _CATextFormFieldState();
 }
 
 class _CATextFormFieldState extends State<CATextFormField> {
-  TextEditingController controller = TextEditingController();
+  late TextEditingController _controller;
+
   @override
   void initState() {
-    if (widget.controller != null) {
-      controller = widget.controller!;
-    }
-
-    controller.text = widget.initialValue ?? "";
-
-    print("INITIAL: ${widget.initialValue}");
     super.initState();
+    _controller = widget.controller ?? TextEditingController();
+    // Set the initial text
+    _controller.text = widget.initialValue ?? "";
   }
 
-  // @override
-  // void didUpdateWidget(covariant CATextFormField oldWidget) {
-  //   if (oldWidget.initialValue != widget.initialValue) {
-  //     setState(() {
-  //       controller.text = widget.initialValue ?? "";
-  //     });
-  //     print("REBUILD");
-  //   }
-  //   super.didUpdateWidget(oldWidget);
-  // }
+  @override
+  void didUpdateWidget(CATextFormField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update controller text if initialValue changes
+    if (widget.initialValue != oldWidget.initialValue) {
+      _controller.text = widget.initialValue ?? "";
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose controller if it was created locally
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
+      controller: _controller,
       enabled: widget.enabled,
-      initialValue: widget.initialValue,
       onChanged: widget.onChange,
       minLines: widget.minLine,
       maxLines: widget.minLine,
