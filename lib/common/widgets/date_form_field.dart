@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CADateFormField extends StatefulWidget {
+  final DateTime? initialValue;
   final String label;
   final String? Function(String?)? validator;
   final Function(DateTime) onPicked;
-  const CADateFormField(
-      {super.key, required this.label, this.validator, required this.onPicked});
+  const CADateFormField({
+    super.key,
+    required this.label,
+    this.validator,
+    required this.onPicked,
+    this.initialValue,
+  });
 
   @override
   State<CADateFormField> createState() => _CADateFormFieldState();
@@ -19,12 +25,39 @@ class _CADateFormFieldState extends State<CADateFormField> {
   TextEditingController controller = TextEditingController();
 
   @override
+  void initState() {
+    if (widget.initialValue != null) {
+      controller.text = DateFormat('yMMMMd').format(widget.initialValue!);
+      _selectedDate = widget.initialValue!;
+    }
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant CADateFormField oldWidget) {
+    if (widget.initialValue != oldWidget.initialValue) {
+      setState(() {
+        if (widget.initialValue != null) {
+          controller.text = DateFormat('yMMMMd').format(widget.initialValue!);
+          _selectedDate = widget.initialValue!;
+        } else {
+          controller.clear();
+          _selectedDate = null;
+        }
+      });
+      print("OLD DATE");
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _selectDate,
       child: AbsorbPointer(
         absorbing: true,
         child: CATextFormField(
+          initialValue: controller.text,
           controller: controller,
           labelText: widget.label,
           validator: widget.validator,

@@ -9,12 +9,14 @@ import 'package:ming_cute_icons/ming_cute_icons.dart';
 
 class UploadDetailsForm extends StatefulWidget {
   final ProjectModel initialData;
+  final GlobalKey<FormState> formKey;
   final Function(ProjectModel) onChanged;
 
   const UploadDetailsForm({
     super.key,
     required this.initialData,
     required this.onChanged,
+    required this.formKey,
   });
 
   @override
@@ -22,13 +24,24 @@ class UploadDetailsForm extends StatefulWidget {
 }
 
 class _UploadDetailsFormState extends State<UploadDetailsForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late ProjectModel data;
 
   @override
   void initState() {
     data = widget.initialData;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant UploadDetailsForm oldWidget) {
+    if (widget.initialData != oldWidget.initialData) {
+      setState(() {
+        data = widget.initialData;
+      });
+      print("FORM UPDATED");
+    }
+    print("ASSASA");
+    super.didUpdateWidget(oldWidget);
   }
 
 // @override
@@ -50,7 +63,7 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
-            key: _formKey,
+            key: widget.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,6 +124,7 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
                 //TODO: Make Month Picker only
                 CADateFormField(
                   label: "Date Approved",
+                  initialValue: data.approvedOn,
                   onPicked: (DateTime val) {
                     data.approvedOn = val;
                     widget.onChanged(data);
@@ -127,13 +141,16 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
                 Spacers.formFieldSpacers(),
                 CATextFormField(
                   labelText: "Abstract",
+                  initialValue: data.projectAbstract,
                   minLine: 5,
                   onChange: (val) {
-                    data.abstract = val;
+                    data.projectAbstract = val;
                     widget.onChanged(data);
                   },
                   validator: (val) {
-                    if (val == null || val.isEmpty || data.abstract == null) {
+                    if (val == null ||
+                        val.isEmpty ||
+                        data.projectAbstract == null) {
                       return "This field is required";
                     }
                     return null;

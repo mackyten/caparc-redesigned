@@ -12,6 +12,7 @@ class UploadsSteps {
     required bool isVerifying,
     Function(String?)? onChange,
     String? Function(String?)? validator,
+    String? initialData,
   }) {
     return Step(
       isActive: currentStep == 0,
@@ -20,25 +21,14 @@ class UploadsSteps {
         key: formKey,
         child: SizedBox(
           child: CATextFormField(
+            initialValue: initialData,
             enabled: !isVerifying,
             labelText: "Capstone Title",
-            // onChange: (val) {
-            //   data.title = val;
-            // },
             onChange: onChange,
             prefix: const Icon(
               MingCuteIcons.mgc_book_6_line,
             ),
             validator: validator,
-            // validator: (val) {
-            //   if (val == null ||
-            //       data.title == null ||
-            //       val.isEmpty ||
-            //       data.title!.isEmpty) {
-            //     return "Please enter your title.";
-            //   }
-            //   return null;
-            // },
           ),
         ),
       ),
@@ -49,6 +39,7 @@ class UploadsSteps {
     required bool isActive,
     required ProjectModel data,
     required Function(ProjectModel) onChanged,
+    required GlobalKey<FormState> formKey,
   }) {
     return Step(
         isActive: isActive,
@@ -56,14 +47,19 @@ class UploadsSteps {
         content: UploadDetailsForm(
           initialData: data,
           onChanged: onChanged,
+          formKey: formKey,
         ));
   }
 
   static Step step3({
     required bool isActive,
     required ProjectModel item,
+    required double bottomNavBarHeight,
   }) {
     return Step(
-        isActive: isActive, title: Text("Review"), content: Review(item: item));
+      isActive: isActive,
+      title: Text("Review"),
+      content: Review(item: item, bottomNavBarHeight: bottomNavBarHeight),
+    );
   }
 }
