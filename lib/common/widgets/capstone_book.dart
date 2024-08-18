@@ -1,13 +1,17 @@
 import 'package:caparc/common/values.dart';
+import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CapstoneBook extends StatelessWidget {
   final Size screenSize;
-  final String title;
-  const CapstoneBook(
-      {super.key, required this.screenSize, required this.title});
+  final ProjectModel project;
+  const CapstoneBook({
+    super.key,
+    required this.screenSize,
+    required this.project,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,7 @@ class CapstoneBook extends StatelessWidget {
                     Container(
                       height: 168,
                       child: Text(
-                        title,
+                        project.title??"<Untitled>",
                         style: TextStyle(
                             color: Colors.amber.shade600,
                             fontWeight: FontWeight.w700,

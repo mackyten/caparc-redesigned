@@ -1,8 +1,4 @@
-import 'package:caparc/blocs/user_bloc/bloc.dart';
-import 'package:caparc/blocs/user_bloc/events.dart';
-import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/presentation/screens/auth_screen/firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {

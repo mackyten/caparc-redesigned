@@ -2,12 +2,10 @@ import 'package:caparc/blocs/upload_screen_bloc/bloc.dart';
 import 'package:caparc/blocs/upload_screen_bloc/event.dart';
 import 'package:caparc/blocs/upload_screen_bloc/state.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
-import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/common/widgets/buttons.dart';
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/data/models/user_model.dart';
 import 'package:caparc/presentation/screens/uploads/widgets/steps.dart';
-import 'package:caparc/services/firebase_queries.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

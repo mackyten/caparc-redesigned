@@ -53,4 +53,17 @@ class UserState {
         password: '');
     return Fullname.buildFullname(item);
   }
+
+  UserModel toUserModel() {
+    return UserModel(
+        id: id,
+        firstname: firstname,
+        middlename: middlename,
+        lastname: lastname,
+        birthdate: birthdate,
+        idNumber: idNumber,
+        accountStatus: accountStatus,
+        email: '',
+        password: '');
+  }
 }

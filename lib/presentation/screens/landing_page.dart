@@ -1,8 +1,6 @@
 import 'package:caparc/blocs/bottom_nav_bar_bloc/bloc.dart';
 import 'package:caparc/blocs/bottom_nav_bar_bloc/state.dart';
-import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/common/widgets/bottom_navigation_bar.dart';
-import 'package:caparc/data/models/user_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
 import 'package:caparc/presentation/screens/auth_screen/firebase_auth/firebase_auth.dart';
 import 'package:caparc/presentation/screens/downloads/download_screen.dart';
@@ -10,7 +8,6 @@ import 'package:caparc/presentation/screens/favorites/favorites_screen.dart';
 import 'package:caparc/presentation/screens/home/home_screen.dart';
 import 'package:caparc/presentation/screens/search/search_screen.dart';
 import 'package:caparc/presentation/screens/uploads/upload_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

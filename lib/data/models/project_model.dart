@@ -1,5 +1,7 @@
+import 'package:caparc/common/enums/account_status.dart';
 import 'package:caparc/common/models/base_model.dart';
 import 'package:caparc/data/models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProjectModel extends BaseModel {
   String? title;
@@ -13,22 +15,24 @@ class ProjectModel extends BaseModel {
   List<String>? keywords;
   String? projectAbstract;
   String? file;
+  bool? isAccepted;
 
-  ProjectModel(
-      {required String id,
-      required DateTime createdAt,
-      this.title,
-      this.createdById,
-      this.authorNames,
-      this.authorAccounts,
-      this.viewedBy,
-      this.downloadedBy,
-      this.favoriteBy,
-      this.approvedOn,
-      this.keywords,
-      this.projectAbstract,
-      this.file})
-      : super(id: id, createdAt: createdAt);
+  ProjectModel({
+    required String id,
+    required DateTime createdAt,
+    this.title,
+    this.createdById,
+    this.authorNames,
+    this.authorAccounts,
+    this.viewedBy,
+    this.downloadedBy,
+    this.favoriteBy,
+    this.approvedOn,
+    this.keywords,
+    this.projectAbstract,
+    this.file,
+    this.isAccepted,
+  }) : super(id: id, createdAt: createdAt);
 
   @override
   Map<String, dynamic> toJson() {
@@ -44,22 +48,36 @@ class ProjectModel extends BaseModel {
       'approvedOn': approvedOn,
       'keywords': keywords,
       'projectAbstract': projectAbstract,
-      'file': file
+      'file': file,
+      'isAccepted': isAccepted
     };
   }
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) {
     return ProjectModel(
         id: json['id'],
-        createdAt: json['createdAt'],
+        createdAt: (json['createdAt'] as Timestamp).toDate(),
         title: json['title'],
         createdById: json['createdById'],
         authorNames: json['authorNames'],
-        authorAccounts: json['authorAccounts'],
+        authorAccounts: (json['authorAccounts'] as List)
+            .map((e) => UserModel(
+                id: e,
+                firstname: '',
+                middlename: 'middlename',
+                lastname: 'lastname',
+                birthdate: DateTime.now(),
+                idNumber: 'idNumber',
+                accountStatus: AccountStatus.verified,
+                email: 'email',
+                password: 'password'))
+            .toList(),
         viewedBy: json['viewedBy'],
         downloadedBy: json['downloadedBy'],
         favoriteBy: json['favoriteBy'],
-        approvedOn: json['approvedOn'],
+        approvedOn: json['approvedOn'] != null
+            ? ((json['approvedOn'] as Timestamp).toDate())
+            : null,
         keywords: json['keywords'],
         projectAbstract: json['abstract'],
         file: json['file']);
