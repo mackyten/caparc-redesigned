@@ -1,3 +1,7 @@
+import 'package:caparc/blocs/home_screen_bloc/bloc.dart';
+import 'package:caparc/blocs/home_screen_bloc/event.dart';
+
+import 'package:caparc/blocs/home_screen_bloc/state.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/common/enums/time_of_day.dart';
 import 'package:caparc/common/values.dart';
@@ -21,6 +25,17 @@ class _HomeScreenState extends State<HomeScreen> {
   late Size screenSize;
   late double _personalProfile;
 
+  late UserState currentUser;
+  late HomeScreenBloc homeScreenBloc = BlocProvider.of<HomeScreenBloc>(context);
+
+  @override
+  void initState() {
+    currentUser = context.read<UserBloc>().state!;
+    homeScreenBloc.add(GetProjects(currentUser.toUserModel()));
+
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     screenSize = MediaQuery.of(context).size;
@@ -33,19 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     TimeOfDayModel timeOfDay = TimeOfDayModel.getTimeOfDay(
         DateTime.now().add(const Duration(hours: -2)));
     return Scaffold(
-      body: BlocBuilder<UserBloc, UserState?>(
-        builder: (context, userState) {
+      body: BlocBuilder<HomeScreenBloc, HomeScreenState?>(
+        builder: (context, state) {
           final AccountStatusModel accountStatus =
-              AccountStatusHelper.getStringValue(userState!.accountStatus);
+              AccountStatusHelper.getStringValue(currentUser.accountStatus);
           return SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -104,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            userState.getFullname(),
+                                            currentUser.getFullname(),
                                             style: titleStyle,
                                           ),
                                           Row(
@@ -122,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     iconsSize -
                                                     2,
                                                 child: Text(
-                                                  userState.idNumber,
+                                                  currentUser.idNumber,
                                                   maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -281,19 +291,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: subtitleStyle,
                   ),
                 ),
-                Container(
-                  height: 280,
-                  width: screenSize.width,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (_, i) {
-                        return CapstoneBook(
-                            screenSize: screenSize,
-                            title:
-                                'CROSS-PLATFORM MULTI-PURPOSE COOPERATIVE MEMBER CREDIT AND TRANSACTION MANAGEMENT SYSTEM');
-                      }),
-                ),
+                state?.newProjects == null || state!.newProjects.isEmpty
+                    ? const SizedBox(height: 200, child: Emptyitem())
+                    : SizedBox(
+                        height: 280,
+                        width: screenSize.width,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.newProjects.length,
+                            itemBuilder: (_, i) {
+                              final project = state.newProjects[i];
+                              return CapstoneBook(
+                                screenSize: screenSize,
+                                project: project,
+                              );
+                            }),
+                      ),
                 SizedBox(
                   height: bodyPadding,
                 ),
@@ -304,18 +317,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: subtitleStyle,
                   ),
                 ),
-                Container(
-                  height: 280,
-                  width: screenSize.width,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 1,
-                      itemBuilder: (_, i) {
-                        return CapstoneBook(
-                            screenSize: screenSize,
-                            title: 'TEST PRJECT TEST PROJECT');
-                      }),
-                ),
+                state?.myApprovedProjects == null ||
+                        state!.myApprovedProjects.isEmpty
+                    ? const SizedBox(height: 200, child: Emptyitem())
+                    : SizedBox(
+                        height: 280,
+                        width: screenSize.width,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.myApprovedProjects.length,
+                            itemBuilder: (_, i) {
+                              final project = state.myApprovedProjects[i];
+                              return CapstoneBook(
+                                screenSize: screenSize,
+                                project: project,
+                              );
+                            }),
+                      ),
                 SizedBox(
                   height: bodyPadding,
                 ),
@@ -326,7 +344,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: subtitleStyle,
                   ),
                 ),
-                SizedBox(height: 155, child: const Emptyitem())
+                state?.myPendingProjects == null ||
+                        state!.myPendingProjects.isEmpty
+                    ? const SizedBox(height: 200, child: Emptyitem())
+                    : SizedBox(
+                        height: 280,
+                        width: screenSize.width,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.myPendingProjects.length,
+                            itemBuilder: (_, i) {
+                              final project = state.myPendingProjects[i];
+                              return CapstoneBook(
+                                screenSize: screenSize,
+                                project: project,
+                              );
+                            }),
+                      )
               ],
             ),
           );

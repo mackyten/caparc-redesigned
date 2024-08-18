@@ -14,4 +14,18 @@ class HomeScreenState {
       required this.newProjects,
       required this.myApprovedProjects,
       required this.myPendingProjects});
+
+  HomeScreenState copyWith({
+    UserModel? currentUser,
+    List<ProjectModel>? newProjects,
+    List<ProjectModel>? myApprovedProjects,
+    List<ProjectModel>? myPendingProjects,
+  }) {
+    return HomeScreenState(
+      currentUser: currentUser ?? this.currentUser,
+      newProjects: newProjects ?? this.newProjects,
+      myApprovedProjects: myApprovedProjects ?? this.myApprovedProjects,
+      myPendingProjects: myPendingProjects ?? this.myPendingProjects,
+    );
+  }
 }
