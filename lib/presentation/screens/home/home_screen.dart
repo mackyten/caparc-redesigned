@@ -304,6 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CapstoneBook(
                                 screenSize: screenSize,
                                 project: project,
+                                currentUser: currentUser,
                               );
                             }),
                       ),
@@ -331,6 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CapstoneBook(
                                 screenSize: screenSize,
                                 project: project,
+                                currentUser: currentUser,
                               );
                             }),
                       ),
@@ -358,9 +360,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CapstoneBook(
                                 screenSize: screenSize,
                                 project: project,
+                                currentUser: currentUser,
                               );
                             }),
-                      )
+                      ),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           );
