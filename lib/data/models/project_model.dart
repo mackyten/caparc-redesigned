@@ -44,7 +44,7 @@ class ProjectModel extends BaseModel {
       'authorAccounts': authorAccounts?.map((e) => e.id).toList(),
       'viewedBy': viewedBy,
       'downloadedBy': downloadedBy,
-      'favoriteBy': favoriteBy,
+      'favoriteBy': favoriteBy?.map((e) => e.id).toList(),
       'approvedOn': approvedOn,
       'keywords': keywords,
       'projectAbstract': projectAbstract,
@@ -74,13 +74,26 @@ class ProjectModel extends BaseModel {
             .toList(),
         viewedBy: json['viewedBy'],
         downloadedBy: json['downloadedBy'],
-        favoriteBy: json['favoriteBy'],
+        favoriteBy: (json['favoriteBy'] as List)
+            .map((e) => UserModel(
+                id: e,
+                firstname: '',
+                middlename: 'middlename',
+                lastname: 'lastname',
+                birthdate: DateTime.now(),
+                idNumber: 'idNumber',
+                accountStatus: AccountStatus.verified,
+                email: 'email',
+                password: 'password'))
+            .toList(),
         approvedOn: json['approvedOn'] != null
             ? ((json['approvedOn'] as Timestamp).toDate())
             : null,
         keywords: json['keywords'],
         projectAbstract: json['abstract'],
-        file: json['file']);
+        file: json['file'],
+        isAccepted: json['isAccepted']
+        );
   }
 
   ProjectModel copyWith({
