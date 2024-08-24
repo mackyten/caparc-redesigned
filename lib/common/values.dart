@@ -20,6 +20,13 @@ List<BoxShadow>? defaultBoxShadow = const [
   ),
 ];
 
+BoxShadow paperShadow = const BoxShadow(
+  color: Colors.black12,
+  offset: Offset(0, 2),
+  spreadRadius: 3,
+  blurRadius: 3,
+);
+
 TextStyle titleStyle = TextStyle(
   color: CAColors.accent,
   fontWeight: FontWeight.w700,
@@ -29,4 +36,10 @@ TextStyle subtitleStyle = const TextStyle(
   color: CAColors.accent,
   fontWeight: FontWeight.w600,
   fontSize: 14,
+);
+
+TextStyle hintStyle = const TextStyle(
+  color: CAColors.secondary,
+  fontWeight: FontWeight.w400,
+  fontSize: 10,
 );

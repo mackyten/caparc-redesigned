@@ -97,7 +97,7 @@ class ProjectModel extends BaseModel {
             ? ((json['approvedOn'] as Timestamp).toDate())
             : null,
         keywords: json['keywords'],
-        projectAbstract: json['abstract'],
+        projectAbstract: json['projectAbstract'],
         file: json['file'],
         isAccepted: json['isAccepted']);
   }
