@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:caparc/common/enums/account_status.dart';
 import 'package:caparc/common/models/base_model.dart';
 import 'package:caparc/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ProjectModel extends BaseModel {
   String? title;
@@ -16,6 +19,7 @@ class ProjectModel extends BaseModel {
   String? projectAbstract;
   String? file;
   bool? isAccepted;
+  PlatformFile? pickedFile;
 
   ProjectModel({
     required String id,
@@ -32,6 +36,7 @@ class ProjectModel extends BaseModel {
     this.projectAbstract,
     this.file,
     this.isAccepted,
+    this.pickedFile,
   }) : super(id: id, createdAt: createdAt);
 
   @override
