@@ -41,7 +41,7 @@ class _CATextFormFieldState extends State<CATextFormField> {
   void didUpdateWidget(CATextFormField oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Update controller text if initialValue changes
-    if (widget.initialValue != oldWidget.initialValue) {
+    if (widget.initialValue != oldWidget.initialValue && mounted) {
       _controller.text = widget.initialValue ?? "";
     }
   }

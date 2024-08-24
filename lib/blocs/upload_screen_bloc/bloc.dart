@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:caparc/blocs/upload_screen_bloc/event.dart';
 import 'package:caparc/blocs/upload_screen_bloc/state.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
@@ -6,6 +8,7 @@ import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/data/models/user_model.dart';
 import 'package:caparc/services/firebase_queries.dart';
 import 'package:caparc/services/upload_service/upload_service.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +26,26 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
     newState.isSubmitting = true;
     emit(newState);
     try {
-      final ProjectModel result = await UploadService.create(state.data);
+      String? uploadedFileUrl;
+
+      if (state.data.pickedFile != null) {
+        print("UPLOADING THE FILE....");
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('capstone-files/${state.data.pickedFile!.name}');
+        final uploadTask =
+            storageRef.putFile(File(state.data.pickedFile!.path!));
+        final snapShot = await uploadTask
+            .whenComplete(() => print("FILE UPLOADED"))
+            .catchError((e) {
+          print("CATCHED ERROR: ${e}");
+        });
+        uploadedFileUrl = await snapShot.ref.getDownloadURL();
+        newState.data.file = uploadedFileUrl;
+        print(uploadedFileUrl);
+      }
+
+      final ProjectModel result = await UploadService.create(newState.data);
       if (result.id.isNotEmpty) {
         emit(UploadState.initial());
         if (event.onSuccess != null) {
@@ -41,6 +63,7 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
     var project = state.data.copyWith();
     project.approvedOn = event.approvedOn;
     project.projectAbstract = event.projectAbstract;
+    project.pickedFile = event.pickedFile;
 
     emit(
       state.copyWith(data: project, currentStep: state.currentStep + 1),

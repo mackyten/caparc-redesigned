@@ -1,5 +1,6 @@
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/data/models/user_model.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -38,10 +39,12 @@ final class VerifyTitle extends UploadEvent {
 final class AddDetails extends UploadEvent {
   final DateTime approvedOn;
   final String projectAbstract;
+  final PlatformFile? pickedFile;
 
   AddDetails(
     this.approvedOn,
     this.projectAbstract,
+    this.pickedFile
   );
 }
 

@@ -54,9 +54,6 @@ class _UploadScreenState extends State<UploadScreen> {
       final bottomNavBar = Scaffold.of(context).widget.bottomNavigationBar;
       if (bottomNavBar != null) {
         bottomNavBarHeight = 30;
-        // setState(() {
-        //   bottomNavBarHeight = (bottomNavBar as SizedBox).height ?? 0.0;
-        // });
       }
     });
 
@@ -117,9 +114,11 @@ class _UploadScreenState extends State<UploadScreen> {
                         isVerifying: state.isVerifying,
                         initialData: state.data.title,
                         onChange: (val) {
-                          setState(() {
-                            data.title = val;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              data.title = val;
+                            });
+                          }
                         },
                         validator: (val) {
                           if (val == null ||
@@ -136,9 +135,11 @@ class _UploadScreenState extends State<UploadScreen> {
                         isActive: state.currentStep == 1,
                         data: state.data,
                         onChanged: (val) {
-                          setState(() {
-                            data = val;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              data = val;
+                            });
+                          }
                         },
                       ),
                       UploadsSteps.step3(
@@ -182,10 +183,11 @@ class _UploadScreenState extends State<UploadScreen> {
     } else if (state.currentStep == 1) {
       if (_step2FormKey.currentState!.validate()) {
         uploadBloc.add(
-          AddDetails(data.approvedOn!, data.projectAbstract!),
+          AddDetails(data.approvedOn!, data.projectAbstract!, data.pickedFile),
         );
       }
     } else {
+      print("PICKED = ${data.pickedFile?.name}");
       uploadBloc.add(SubmitProject(
         onSuccess: (project) {},
       ));

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:caparc/common/widgets/date_form_field.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class UploadDetailsForm extends StatefulWidget {
@@ -33,26 +36,16 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
   @override
   void didUpdateWidget(covariant UploadDetailsForm oldWidget) {
     if (widget.initialData != oldWidget.initialData) {
-      setState(() {
-        data = widget.initialData;
-      });
-      print("FORM UPDATED");
+      if (mounted) {
+        setState(() {
+          data = widget.initialData;
+        });
+      }
     }
-    print("ASSASA");
+
     super.didUpdateWidget(oldWidget);
   }
 
-// @override
-//   void didUpdateWidget(covariant UploadDetailsForm oldWidget) {
-//    if(oldWidget.initialData.title != widget.initialData.title)
-//    {
-//     print("TITLE CHANGED");
-//     setState(() {
-//       data.title = widget.initialData.title;
-//     });
-//    }
-//     super.didUpdateWidget(oldWidget);
-//   }
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -108,15 +101,6 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
                   ),
                 ),
 
-                // CATextFormField(
-                //   labelText: "Title",
-                //   prefix: const Icon(
-                //     MingCuteIcons.mgc_book_6_line,
-                //   ),
-                //   initialValue: "asdajsh",
-                //   enabled: false,
-                // ),
-
                 Spacers.formFieldSpacers(),
 
                 //TODO: Make Month Picker only
@@ -155,6 +139,27 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
                   },
                 ),
 
+                Spacers.formFieldSpacers(),
+                InkWell(
+                  onTap: pickFile,
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: CAColors.accent,
+                      ),
+                    ),
+                    child: Text(
+                      data.pickedFile != null
+                          ? "${data.pickedFile?.name}"
+                          : "Attach file",
+                    ),
+                  ),
+                ),
+
                 Spacers.formFieldSpacers()
               ],
             ),
@@ -162,5 +167,22 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
         ),
       ),
     );
+  }
+
+  void pickFile() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      if (mounted) {
+        setState(() {
+          data.pickedFile = result.files.first;
+        });
+      }
+      widget.onChanged(data);
+    } else {
+      // User canceled the picker
+    }
   }
 }
