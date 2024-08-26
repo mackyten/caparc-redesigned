@@ -6,6 +6,7 @@ import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/services/file_service/file_service.dart';
 import 'package:caparc/services/firebase_queries.dart';
 import 'package:caparc/services/upload_service/upload_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -29,20 +30,24 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
       String? uploadedFileUrl;
 
       if (state.data.pickedFile != null) {
-        print("UPLOADING THE FILE....");
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('capstone-files/${state.data.pickedFile!.name}');
-        final uploadTask =
-            storageRef.putFile(File(state.data.pickedFile!.path!));
-        final snapShot = await uploadTask
-            .whenComplete(() => print("FILE UPLOADED"))
-            .catchError((e) {
-          print("CATCHED ERROR: ${e}");
-        });
-        uploadedFileUrl = await snapShot.ref.getDownloadURL();
+        final fileService = FileService();
+        uploadedFileUrl = await fileService.uploadFile(
+            state.data.title ?? "random", state.data.pickedFile!.path!);
         newState.data.file = uploadedFileUrl;
-        print(uploadedFileUrl);
+        // print("UPLOADING THE FILE....");
+        // final storageRef = FirebaseStorage.instance
+        //     .ref()
+        //     .child('capstone-files/${state.data.pickedFile!.name}');
+        // final uploadTask =
+        //     storageRef.putFile(File(state.data.pickedFile!.path!));
+        // final snapShot = await uploadTask
+        //     .whenComplete(() => print("FILE UPLOADED"))
+        //     .catchError((e) {
+        //   print("CATCHED ERROR: ${e}");
+        // });
+        // uploadedFileUrl = await snapShot.ref.getDownloadURL();
+        // newState.data.file = uploadedFileUrl;
+        // print(uploadedFileUrl);
       }
 
       final ProjectModel result = await UploadService.create(newState.data);
@@ -92,7 +97,7 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
   Future<void> _verifyTitle(
       VerifyTitle event, Emitter<UploadState> emit) async {
     // Emit the new state with isVerifying set to true
-    print('AJDHSJADHKJH');
+
     emit(state.copyWith(isVerifying: true));
 
     // Perform the title check
@@ -101,7 +106,7 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
 
     if (isExisting) {
       // TODO: Handle the case where the title already exists
-      print("Title already exists.");
+
       emit(state.copyWith(isVerifying: false)); // Reset isVerifying
       return;
     }

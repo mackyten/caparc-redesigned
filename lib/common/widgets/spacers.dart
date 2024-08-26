@@ -6,4 +6,10 @@ class Spacers {
       height: 20,
     );
   }
+
+  static Widget listItemSpacers() {
+    return const SizedBox(
+      height: 10,
+    );
+  }
 }

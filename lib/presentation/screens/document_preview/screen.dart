@@ -2,6 +2,7 @@ import 'package:caparc/common/values.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/services/file_service/file_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 
@@ -17,6 +18,7 @@ class ProjectPreviewScreen extends StatefulWidget {
 }
 
 class _ProjectPreviewScreenState extends State<ProjectPreviewScreen> {
+  final fileService = FileService();
   late Size screenSize;
 
   @override
@@ -125,7 +127,7 @@ class _ProjectPreviewScreenState extends State<ProjectPreviewScreen> {
                                   child: Tooltip(
                                     message: "Download for offline viewing",
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: _download,
                                       borderRadius: BorderRadius.circular(100),
                                       child: const Padding(
                                         padding: EdgeInsets.all(5.0),
@@ -197,5 +199,10 @@ class _ProjectPreviewScreenState extends State<ProjectPreviewScreen> {
       ),
       child: child,
     );
+  }
+
+  Future<void> _download() async {
+    if (widget.project.file == null) return;
+    fileService.downloadFile(widget.project.file!, widget.project.title!);
   }
 }
