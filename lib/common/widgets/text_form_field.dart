@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CATextFormField extends StatefulWidget {
-  final String labelText;
+  final String? labelText;
   final String? Function(String?)? validator;
   final String? initialValue;
   final TextEditingController? controller;
@@ -9,10 +9,15 @@ class CATextFormField extends StatefulWidget {
   final Function(String?)? onChange;
   final bool? enabled;
   final int? minLine;
+  final Function(String val)? onFieldSubmitted;
+  final String? helperText;
+  final String? hintText;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
 
   const CATextFormField({
     super.key,
-    required this.labelText,
+    this.labelText,
     this.validator,
     this.initialValue,
     this.controller,
@@ -20,6 +25,11 @@ class CATextFormField extends StatefulWidget {
     this.prefix,
     this.enabled,
     this.minLine = 1,
+    this.onFieldSubmitted,
+    this.helperText,
+    this.hintText,
+    this.keyboardType,
+    this.textInputAction,
   });
 
   @override
@@ -58,12 +68,17 @@ class _CATextFormFieldState extends State<CATextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: widget.keyboardType,
       controller: _controller,
       enabled: widget.enabled,
       onChanged: widget.onChange,
       minLines: widget.minLine,
       maxLines: widget.minLine,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      textInputAction: widget.textInputAction,
       decoration: InputDecoration(
+        helperText: widget.helperText,
+        hintText: widget.hintText,
         prefixIcon: widget.prefix,
         labelText: widget.labelText,
         enabledBorder: OutlineInputBorder(),

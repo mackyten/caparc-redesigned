@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:caparc/common/enums/file_size_unit.dart';
 import 'package:caparc/common/methods/file_size_builder.dart';
 import 'package:caparc/common/values.dart';
 import 'package:caparc/common/widgets/pdf_viewer.dart';

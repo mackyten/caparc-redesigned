@@ -1,7 +1,6 @@
 import 'package:caparc/data/models/project_model.dart';
 import 'package:flutter/material.dart';
 
-@immutable
 class UploadState {
   bool isSubmitting;
   bool isVerifying;

@@ -3,6 +3,7 @@ import 'package:caparc/blocs/bottom_nav_bar_bloc/bloc.dart';
 import 'package:caparc/blocs/dload_bloc/dload_bloc.dart';
 import 'package:caparc/blocs/favorites_bloc/bloc.dart';
 import 'package:caparc/blocs/home_screen_bloc/bloc.dart';
+import 'package:caparc/blocs/search_bloc/search_bloc.dart';
 import 'package:caparc/blocs/upload_screen_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/firebase_options.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UploadBloc()),
         BlocProvider(create: (context) => HomeScreenBloc()),
         BlocProvider(create: (context) => FavoriteBloc()),
-        BlocProvider(create: (context) => DloadBloc())
+        BlocProvider(create: (context) => DloadBloc()),
+        BlocProvider(create: (context) => SearchBloc())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

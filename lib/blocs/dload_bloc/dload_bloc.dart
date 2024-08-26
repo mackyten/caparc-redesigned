@@ -14,7 +14,7 @@ class DloadBloc extends Bloc<DloadEvent, DloadState> {
 
   _onGet(DloadEvent event, Emitter<DloadState> emit) async {
     final directory = await state.directory();
-    final files = Directory(directory.path).listSync();
+    final files = Directory("${directory.path}/downloads").listSync();
     files.sort(
         ((a, b) => b.statSync().modified.compareTo(a.statSync().modified)));
 

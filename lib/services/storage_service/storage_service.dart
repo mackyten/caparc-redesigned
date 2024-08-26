@@ -23,7 +23,7 @@ class FileService {
   Future<void> downloadFile(String location, String filename) async {
     try {
       final directory = await getApplicationCacheDirectory();
-      final filePath = "${directory.path}/$filename.pdf";
+      final filePath = "${directory.path}/downloads/$filename.pdf";
 
       // final bool isExisting = await isFileExisting(filePath);
       // if (isExisting) return;

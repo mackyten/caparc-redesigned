@@ -1,4 +1,3 @@
-import 'package:caparc/common/values.dart';
 import 'package:caparc/presentation/screens/downloads/widgets/downloaded_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
