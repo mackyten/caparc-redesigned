@@ -2,7 +2,7 @@ import 'package:caparc/common/values.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
-import 'package:caparc/services/file_service/file_service.dart';
+import 'package:caparc/services/storage_service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 

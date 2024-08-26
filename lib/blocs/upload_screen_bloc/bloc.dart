@@ -1,16 +1,9 @@
-import 'dart:io';
-
 import 'package:caparc/blocs/upload_screen_bloc/event.dart';
 import 'package:caparc/blocs/upload_screen_bloc/state.dart';
-import 'package:caparc/blocs/user_bloc/bloc.dart';
-import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/data/models/project_model.dart';
-import 'package:caparc/data/models/user_model.dart';
-import 'package:caparc/services/file_service/file_service.dart';
+import 'package:caparc/services/firestore_service/create_service.dart';
+import 'package:caparc/services/storage_service/storage_service.dart';
 import 'package:caparc/services/firebase_queries.dart';
-import 'package:caparc/services/upload_service/upload_service.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UploadBloc extends Bloc<UploadEvent, UploadState> {
@@ -28,6 +21,8 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
     emit(newState);
     try {
       String? uploadedFileUrl;
+
+      CreateServiceInterface firestoreService = CreateService();
 
       if (state.data.pickedFile != null) {
         final fileService = FileService();
@@ -50,7 +45,7 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
         // print(uploadedFileUrl);
       }
 
-      final ProjectModel result = await UploadService.create(newState.data);
+      final ProjectModel result = await firestoreService.create(newState.data);
       if (result.id.isNotEmpty) {
         emit(UploadState.initial());
         if (event.onSuccess != null) {

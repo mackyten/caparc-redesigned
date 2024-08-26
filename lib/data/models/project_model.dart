@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:caparc/common/enums/account_status.dart';
 import 'package:caparc/common/models/base_model.dart';
 import 'package:caparc/data/models/user_model.dart';

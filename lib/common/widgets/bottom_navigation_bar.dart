@@ -1,4 +1,3 @@
-import 'package:caparc/blocs/bottom_nav_bar_bloc/event.dart';
 import 'package:caparc/blocs/bottom_nav_bar_bloc/state.dart';
 import 'package:caparc/common/widgets/models.dart';
 import 'package:caparc/presentation/ca_colors.dart';

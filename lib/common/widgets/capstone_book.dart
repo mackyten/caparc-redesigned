@@ -3,7 +3,7 @@ import 'package:caparc/common/values.dart';
 import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
 import 'package:caparc/presentation/screens/document_preview/screen.dart';
-import 'package:caparc/services/home_service/upload_service.dart';
+import 'package:caparc/services/firestore_service/create_service.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
@@ -19,6 +19,7 @@ class CapstoneBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CreateServiceInterface firestoreService = CreateService();
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -94,7 +95,7 @@ class CapstoneBook extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             onTap: (isLiked) async {
-                              final result = await HomeService.toggleLike(
+                              final result = await firestoreService.toggleLike(
                                   project.id, currentUser.id);
                               return result;
                             },

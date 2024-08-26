@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:caparc/common/widgets/date_form_field.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
@@ -174,7 +172,7 @@ class _UploadDetailsFormState extends State<UploadDetailsForm> {
         .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
 
     if (result != null) {
-      File file = File(result.files.single.path!);
+      // File file = File(result.files.single.path!);
       if (mounted) {
         setState(() {
           data.pickedFile = result.files.first;

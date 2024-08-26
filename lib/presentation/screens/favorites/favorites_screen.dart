@@ -3,7 +3,8 @@ import 'package:caparc/blocs/favorites_bloc/event.dart';
 import 'package:caparc/blocs/favorites_bloc/state.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
-import 'package:caparc/presentation/screens/favorites/widgets/favorite_item.dart';
+import 'package:caparc/common/widgets/favorite_item.dart';
+import 'package:caparc/data/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,7 +53,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     child: FavoriteItem(
                       project: project,
                       currentUser: currentUser,
-                      onTap: _onTap,
+                      onLikeTap: _onTap,
                     ),
                   );
                 }),
@@ -62,10 +63,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  void _onTap(String id) {
+  void _onTap(ProjectModel project) {
     favoriteBloc.add(
       RemoveFavorite(
-        id,
+        project.id,
         currentUser.toUserModel(),
       ),
     );
