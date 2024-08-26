@@ -46,6 +46,11 @@ dependencies:
   like_button: ^2.0.5
   file_picker: ^8.0.0+1
   firebase_storage: ^11.6.9
+  path_provider: ^2.1.4
+  dio: ^5.6.0
+  easy_pdf_viewer: ^1.0.8
+  flutter_windowmanager: ^0.2.0
+
 
 dev_dependencies:
   flutter_test:

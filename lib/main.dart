@@ -1,5 +1,6 @@
 import 'package:caparc/bloc/counter_bloc.dart';
 import 'package:caparc/blocs/bottom_nav_bar_bloc/bloc.dart';
+import 'package:caparc/blocs/dload_bloc/dload_bloc.dart';
 import 'package:caparc/blocs/favorites_bloc/bloc.dart';
 import 'package:caparc/blocs/home_screen_bloc/bloc.dart';
 import 'package:caparc/blocs/upload_screen_bloc/bloc.dart';
@@ -13,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 Future<void> main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
-
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (context) => UploadBloc()),
         BlocProvider(create: (context) => HomeScreenBloc()),
-        BlocProvider(create: (context) => FavoriteBloc())
+        BlocProvider(create: (context) => FavoriteBloc()),
+        BlocProvider(create: (context) => DloadBloc())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
