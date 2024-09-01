@@ -6,12 +6,13 @@ import 'package:caparc/presentation/screens/auth_screen/firebase_auth/firebase_a
 import 'package:caparc/presentation/screens/downloads/download_screen.dart';
 import 'package:caparc/presentation/screens/favorites/favorites_screen.dart';
 import 'package:caparc/presentation/screens/home/home_screen.dart';
+import 'package:caparc/presentation/screens/landing_page/end_drawer.dart';
 import 'package:caparc/presentation/screens/search/search_screen.dart';
 import 'package:caparc/presentation/screens/uploads/upload_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/bottom_nav_bar_bloc/event.dart';
+import '../../../blocs/bottom_nav_bar_bloc/event.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -61,27 +62,7 @@ class _LandingPageState extends State<LandingPage> {
         backgroundColor: CAColors.accent,
         foregroundColor: CAColors.white,
       ),
-      endDrawer: Container(
-        width: screenSize.width * .70,
-        color: CAColors.accent,
-        child: Column(
-          children: [
-            Spacer(),
-            InkWell(
-              onTap: () {
-                Auth.signOut();
-              },
-              child: Container(
-                height: 60,
-                child: Text(
-                  'Logout',
-                  style: TextStyle(color: CAColors.white),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      endDrawer: EndDrawerMenu(),
       body: BlocBuilder<BottomNavBloc, BottomNavState>(
           bloc: bottomNavState,
           builder: (_, state) {

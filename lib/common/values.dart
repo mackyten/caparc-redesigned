@@ -10,6 +10,7 @@ Size avatarSize = const Size(60, 60);
 double titleSize = 18;
 double subtitleSize = 16;
 double detailSize = 12;
+const Duration animationDuration = Duration(milliseconds: 200);
 
 List<BoxShadow>? defaultBoxShadow = const [
   BoxShadow(
@@ -42,4 +43,10 @@ TextStyle hintStyle = const TextStyle(
   color: CAColors.secondary,
   fontWeight: FontWeight.w400,
   fontSize: 10,
+);
+
+TextStyle valueStyle = const TextStyle(
+  color: CAColors.text,
+  fontWeight: FontWeight.w400,
+  fontSize: 11,
 );

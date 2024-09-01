@@ -1,5 +1,7 @@
+import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/presentation/screens/auth_screen/firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -11,6 +13,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   late Size screenSize;
   final _formKey = GlobalKey<FormState>();
+  late UserBloc userBloc = context.read<UserBloc>();
 
   @override
   void didChangeDependencies() {
@@ -65,7 +68,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   _signIn() async {
     if (_formKey.currentState!.validate()) {
-      await Auth.signIn(context);
+      await Auth.signIn(context, userBloc);
       // if (result != null) {
       //   UserBloc userBloc = UserBloc();
 

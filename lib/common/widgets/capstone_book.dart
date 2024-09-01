@@ -19,7 +19,7 @@ class CapstoneBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CreateServiceInterface firestoreService = CreateService();
+    FirestoreCreateServiceInterface firestoreService = FirestoreCreateService();
     return Material(
       color: Colors.transparent,
       child: InkWell(

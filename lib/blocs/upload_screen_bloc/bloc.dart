@@ -1,9 +1,11 @@
 import 'package:caparc/blocs/upload_screen_bloc/event.dart';
 import 'package:caparc/blocs/upload_screen_bloc/state.dart';
 import 'package:caparc/data/models/project_model.dart';
-import 'package:caparc/services/firestore_service/create_service.dart';
-import 'package:caparc/services/storage_service/storage_service.dart';
+
 import 'package:caparc/services/firebase_queries.dart';
+import 'package:caparc/services/firestore_service/create_service.dart';
+import 'package:caparc/services/firestore_service/firestore_service.dart';
+import 'package:caparc/services/storage_service/create_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UploadBloc extends Bloc<UploadEvent, UploadState> {
@@ -22,28 +24,23 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
     try {
       String? uploadedFileUrl;
 
-      CreateServiceInterface firestoreService = CreateService();
-
       if (state.data.pickedFile != null) {
-        final fileService = FileService();
-        uploadedFileUrl = await fileService.uploadFile(
-            state.data.title ?? "random", state.data.pickedFile!.path!);
+        // final fileService = FileService();
+        // uploadedFileUrl = await fileService.uploadFile(
+        //     state.data.title ?? "random", state.data.pickedFile!.path!);
+
+        StorageCreateServiceInterface createService =
+            StorageCreateService(fileName: state.data.pickedFile!.name);
+
+        uploadedFileUrl = await createService
+            .uploadCapstoneFile(state.data.pickedFile!.path!);
+
         newState.data.file = uploadedFileUrl;
-        // print("UPLOADING THE FILE....");
-        // final storageRef = FirebaseStorage.instance
-        //     .ref()
-        //     .child('capstone-files/${state.data.pickedFile!.name}');
-        // final uploadTask =
-        //     storageRef.putFile(File(state.data.pickedFile!.path!));
-        // final snapShot = await uploadTask
-        //     .whenComplete(() => print("FILE UPLOADED"))
-        //     .catchError((e) {
-        //   print("CATCHED ERROR: ${e}");
-        // });
-        // uploadedFileUrl = await snapShot.ref.getDownloadURL();
-        // newState.data.file = uploadedFileUrl;
-        // print(uploadedFileUrl);
+        print(uploadedFileUrl);
       }
+
+      FirestoreCreateServiceInterface firestoreService =
+          FirestoreCreateService();
 
       final ProjectModel result = await firestoreService.create(newState.data);
       if (result.id.isNotEmpty) {

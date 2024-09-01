@@ -1,7 +1,7 @@
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/presentation/screens/auth_screen/sign_in.dart';
-import 'package:caparc/presentation/screens/landing_page.dart';
+import 'package:caparc/presentation/screens/landing_page/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -100,7 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _onLikeTap(ProjectModel project, String query) async {
-    CreateServiceInterface iCreatService = CreateService();
+    FirestoreCreateServiceInterface iCreatService = FirestoreCreateService();
     final result = await iCreatService.toggleLike(project.id, currentUser!.id);
     searchBloc.add(
       SearchTitle(title: query),

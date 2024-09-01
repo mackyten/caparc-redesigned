@@ -10,7 +10,7 @@ class CAColors {
   static const Color success = Color(0xff1ca568);
   static const Color danger = Color(0xfff93b4c);
   static const Color warning = Color(0xffffc000);
-  static const Color placeholder = Color(0xffa1a1a1);
+  static const Color placeholder = Color.fromARGB(255, 81, 14, 14);
   static const Color deactivated = Color.fromARGB(255, 158, 158, 158);
   static const Color disabledFields = Color(0xffdcdcdc);
 
@@ -18,4 +18,7 @@ class CAColors {
   static Color textMed = Colors.black.withOpacity(0.60);
   static const Color textLow = Colors.black38;
   static Color shadow = Colors.black.withOpacity(.10);
+
+  static const Color text = Color.fromRGBO(133, 140, 160, 1);
+  static Color textDarker = Colors.black.withOpacity(.60);
 }
