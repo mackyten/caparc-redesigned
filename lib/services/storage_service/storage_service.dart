@@ -1,24 +1,48 @@
 import 'dart:io';
 
+import 'package:caparc/services/storage_service/query_service.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
-class FileService {
-  Future<String> uploadFile(String fileName, String filePath) async {
-    print("UPLOADING THE FILE....");
-    final storageRef =
-        FirebaseStorage.instance.ref().child('capstone-files/$fileName');
-    final uploadTask = storageRef.putFile(File(filePath));
-    final snapShot = await uploadTask
-        .whenComplete(() => print("FILE UPLOADED"))
-        .catchError((e) {
-      print("CATCHED ERROR: ${e}");
-    });
+class StorageService implements StorageServiceInterface {
+  final String fileName;
 
-    print("FILE: LOCATION: ${storageRef.fullPath}");
-    return storageRef.fullPath;
+  // Constructor where fileName is required
+  StorageService({required this.fileName});
+
+  // Using a getter to create the reference when needed
+  @override
+  Reference get capstoneFileReference {
+    return FirebaseStorage.instance.ref().child('capstone-files/$fileName');
   }
+
+  @override
+  Reference get avatarFileReference {
+    return FirebaseStorage.instance.ref().child('avatar/$fileName');
+  }
+}
+
+abstract class StorageServiceInterface {
+  Reference get capstoneFileReference;
+  Reference get avatarFileReference;
+}
+
+class FileService {
+  // Future<String> uploadFile(String fileName, String filePath) async {
+  //   print("UPLOADING THE FILE....");
+  //   final storageRef =
+  //       FirebaseStorage.instance.ref().child('capstone-files/$fileName');
+  //   final uploadTask = storageRef.putFile(File(filePath));
+  //   final snapShot = await uploadTask
+  //       .whenComplete(() => print("FILE UPLOADED"))
+  //       .catchError((e) {
+  //     print("CATCHED ERROR: ${e}");
+  //   });
+
+  //   print("FILE: LOCATION: ${storageRef.fullPath}");
+  //   return storageRef.fullPath;
+  // }
 
   Future<void> downloadFile(String location, String filename) async {
     try {
@@ -29,8 +53,8 @@ class FileService {
       // if (isExisting) return;
 
       final Dio dio = Dio();
-
-      final String url = await getDownloadURL(location);
+      IStorageQueryService iStorageQueryService = StorageQueryService();
+      final String url = await iStorageQueryService.getDownloadURL(location);
 
       await dio.download(
         url,
@@ -54,15 +78,15 @@ class FileService {
     return await file.exists();
   }
 
-  Future<String> getDownloadURL(String filePath) async {
-    try {
-      final ref = FirebaseStorage.instance.ref().child(filePath);
-      String downloadURL = await ref.getDownloadURL();
-      print("DOWNLOAD URL: $downloadURL");
-      return downloadURL;
-    } catch (e) {
-      print('Error generating download URL: $e');
-      return '';
-    }
-  }
+  // Future<String> getDownloadURL(String filePath) async {
+  //   try {
+  //     final ref = FirebaseStorage.instance.ref().child(filePath);
+  //     String downloadURL = await ref.getDownloadURL();
+  //     print("DOWNLOAD URL: $downloadURL");
+  //     return downloadURL;
+  //   } catch (e) {
+  //     print('Error generating download URL: $e');
+  //     return '';
+  //   }
+  // }
 }

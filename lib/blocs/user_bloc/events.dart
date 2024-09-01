@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 @immutable
 sealed class UserEvents {}
 
-class SignIn extends UserEvents {
+class SetUser extends UserEvents {
   final UserState? userState;
 
-  SignIn({required this.userState});
+  SetUser({required this.userState});
 }
 
 class Logout extends UserEvents {}

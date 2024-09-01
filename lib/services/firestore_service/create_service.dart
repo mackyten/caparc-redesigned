@@ -2,13 +2,13 @@ import 'package:caparc/data/models/project_model.dart';
 import 'package:caparc/services/firestore_service/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CreateService extends FirestoreService implements CreateServiceInterface {
+class FirestoreCreateService extends FirestoreService implements FirestoreCreateServiceInterface {
   //CollectionReference collection = collectionReference;
 
   @override
   Future<ProjectModel> create(ProjectModel project) async {
     try {
-      final docRef = collectionReference.doc();
+      final docRef = projectReference.doc();
       project.id = docRef.id;
       await docRef.set(project.toJson());
 
@@ -22,7 +22,7 @@ class CreateService extends FirestoreService implements CreateServiceInterface {
   @override
   Future<bool> toggleLike(String projectId, String userId) async {
     assert(projectId.isNotEmpty, "TOGGLE LIKE ERROR: project id is empty");
-    CollectionReference projects = collectionReference;
+    CollectionReference projects = projectReference;
     try {
       // Get the document by ID
       DocumentSnapshot documentSnapshot = await projects.doc(projectId).get();
@@ -56,7 +56,7 @@ class CreateService extends FirestoreService implements CreateServiceInterface {
   }
 }
 
-abstract class CreateServiceInterface {
+abstract class FirestoreCreateServiceInterface {
   Future<ProjectModel> create(ProjectModel project);
   Future<bool> toggleLike(String projectId, String userId);
 }

@@ -1,7 +1,9 @@
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/events.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
+import 'package:caparc/common/models/course_model.dart';
 import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/services/firestore_service/query_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,39 +12,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class Auth {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  static signIn(BuildContext context) async {
+  static signIn(BuildContext context, UserBloc userBloc) async {
     try {
+      //TODO update to dynamic
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: "angelo@gmail.com",
         password: "123456",
       );
+      FirestoreQueryInterface queryInterface = FirestoreQuery();
+      UserModel? user = await queryInterface.getUser(userCredential.user!.uid);
+      if (user == null) {
+        signOut();
+      }
 
-      final DocumentReference document = FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user?.uid);
+      userBloc.add(
+        SetUser(
+          userState: UserState(
+            id: user!.id,
+            firstname: user.firstname,
+            middlename: user.middlename,
+            lastname: user.lastname,
+            birthdate: user.birthdate,
+            idNumber: user.idNumber,
+            accountStatus: user.accountStatus,
+            prefix: user.prefix,
+            suffix: user.suffix,
+            email: user.email,
+            course: user.course,
+            avatarLink: user.avatarLink,
+          ),
+        ),
+      );
 
-      await document.get().then((snapshot) async {
-        print(snapshot);
-        if (snapshot.exists) {
-          UserModel user =
-              UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
-          UserBloc userBloc = context.read<UserBloc>();
+      // final DocumentReference document = FirebaseFirestore.instance
+      //     .collection('users')
+      //     .doc(userCredential.user?.uid);
 
-          userBloc.add(SignIn(
-              userState: UserState(
-                  id: user.id,
-                  firstname: user.firstname,
-                  middlename: user.middlename,
-                  lastname: user.lastname,
-                  birthdate: user.birthdate,
-                  idNumber: user.idNumber,
-                  accountStatus: user.accountStatus,
-                  prefix: user.prefix,
-                  suffix: user.suffix)));
-        } else {
-          signOut();
-        }
-      }).onError((error, stackTrace) {});
+      // await document.get().then((snapshot) async {
+      //   print(snapshot);
+      //   if (snapshot.exists) {
+
+      //   } else {
+      //     signOut();
+      //   }
+      // }).onError((error, stackTrace) {});
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

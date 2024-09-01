@@ -152,7 +152,8 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                 SizedBox(
                   height: bodyPadding,
                 ),
-                ElevatedButton(onPressed: _register, child: const Text('Register'))
+                ElevatedButton(
+                    onPressed: _register, child: const Text('Register'))
               ],
             ),
           ),
@@ -184,16 +185,18 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
     if (result is UserModel) {
       UserBloc userBloc = BlocProvider.of<UserBloc>(context);
       UserState currentUser = UserState(
-          id: result.id,
-          firstname: result.firstname,
-          middlename: result.middlename,
-          lastname: result.lastname,
-          birthdate: result.birthdate,
-          idNumber: result.idNumber,
-          accountStatus: result.accountStatus,
-          prefix: result.prefix,
-          suffix: result.suffix);
-      userBloc.add(SignIn(userState: currentUser));
+        id: result.id,
+        firstname: result.firstname,
+        middlename: result.middlename,
+        lastname: result.lastname,
+        birthdate: result.birthdate,
+        idNumber: result.idNumber,
+        accountStatus: result.accountStatus,
+        prefix: result.prefix,
+        suffix: result.suffix,
+        email: result.email,
+      );
+      userBloc.add(SetUser(userState: currentUser));
 
       Navigator.of(context).pop();
     } else {
