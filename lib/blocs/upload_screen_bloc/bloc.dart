@@ -1,10 +1,8 @@
 import 'package:caparc/blocs/upload_screen_bloc/event.dart';
 import 'package:caparc/blocs/upload_screen_bloc/state.dart';
 import 'package:caparc/data/models/project_model.dart';
-
 import 'package:caparc/services/firebase_queries.dart';
 import 'package:caparc/services/firestore_service/create_service.dart';
-import 'package:caparc/services/firestore_service/firestore_service.dart';
 import 'package:caparc/services/storage_service/create_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,10 +23,6 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
       String? uploadedFileUrl;
 
       if (state.data.pickedFile != null) {
-        // final fileService = FileService();
-        // uploadedFileUrl = await fileService.uploadFile(
-        //     state.data.title ?? "random", state.data.pickedFile!.path!);
-
         StorageCreateServiceInterface createService =
             StorageCreateService(fileName: state.data.pickedFile!.name);
 
@@ -36,7 +30,6 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
             .uploadCapstoneFile(state.data.pickedFile!.path!);
 
         newState.data.file = uploadedFileUrl;
-        print(uploadedFileUrl);
       }
 
       FirestoreCreateServiceInterface firestoreService =

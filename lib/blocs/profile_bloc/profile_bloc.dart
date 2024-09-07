@@ -1,14 +1,11 @@
-import 'package:bloc/bloc.dart';
+
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/events.dart';
-import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/data/models/user_model.dart';
-import 'package:caparc/services/firestore_service/firestore_service.dart';
 import 'package:caparc/services/firestore_service/update_service.dart';
 import 'package:caparc/services/storage_service/create_service.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'profile_event.dart';
 part 'profile_state.dart';
 
@@ -32,6 +29,7 @@ class ProfileBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   void _onSubmit(Submit event, Emitter<ProfileBlocState> emit) async {
     final UpdateServiceInterface service = UpdateService();
     UserModel toUpdate = event.data;
+    emit(state.copyWith(isSubmitting: true));
 
     if (event.data.pickedAvatar != null) {
       StorageCreateServiceInterface storageCreateService =
@@ -48,7 +46,7 @@ class ProfileBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       ),
     );
     event.onSuccessfulUpdate();
-    emit(state.copyWith(isSubmitting: true));
+    emit(state.copyWith(isSubmitting: false));
   }
 
   void _onReset(ResetState event, Emitter<ProfileBlocState> emit) {

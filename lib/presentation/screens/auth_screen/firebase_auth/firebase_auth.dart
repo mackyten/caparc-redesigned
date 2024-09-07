@@ -1,22 +1,22 @@
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/events.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
-import 'package:caparc/common/models/course_model.dart';
 import 'package:caparc/data/models/user_model.dart';
 import 'package:caparc/services/firestore_service/query_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 
 class Auth {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
   static signIn(BuildContext context, UserBloc userBloc) async {
     try {
+      //markangelosabado10@gmail.com
       //TODO update to dynamic
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-        email: "angelo@gmail.com",
+        email: "qletzsteven11@gmail.com",
         password: "123456",
       );
       FirestoreQueryInterface queryInterface = FirestoreQuery();
@@ -58,11 +58,17 @@ class Auth {
       // }).onError((error, stackTrace) {});
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        if (kDebugMode) {
+          print('No user found for that email.');
+        }
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        if (kDebugMode) {
+          print('Wrong password provided for that user.');
+        }
       } else {
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
       }
     }
   }
@@ -91,14 +97,18 @@ class Auth {
       auth.signOut();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        if (kDebugMode) {
+          print('No user found for that email.');
+        }
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        if (kDebugMode) {
+          print('Wrong password provided for that user.');
+        }
       } else {
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
       }
     }
   }
-
-  _updateUserState() {}
 }

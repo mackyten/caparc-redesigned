@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+///TODO move to services
 class FirebaseQueries {
   static Future<bool> checkTitleIfExists(String title) async {
     try {

@@ -3,10 +3,10 @@ import 'package:caparc/common/values.dart';
 import 'package:caparc/data/models/end_drawer_item_model.dart';
 import 'package:caparc/presentation/ca_colors.dart';
 import 'package:caparc/presentation/screens/auth_screen/firebase_auth/firebase_auth.dart';
-import 'package:caparc/presentation/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
+import '../../../common/widgets/dialogs/error_dialog.dart';
 
 class EndDrawerMenu extends StatefulWidget {
   const EndDrawerMenu({super.key});
@@ -25,6 +25,12 @@ class _EndDrawerMenuState extends State<EndDrawerMenu> {
       title: "Profile",
       icon: MingCuteIcons.mgc_user_3_fill,
       screen: "/home/profile",
+    ),
+    EndDrawerItemModel(
+      onTap: () {},
+      title: "Account Security",
+      icon: MingCuteIcons.mgc_lock_fill,
+      screen: "/home/account-security",
     )
   ];
 
@@ -54,7 +60,7 @@ class _EndDrawerMenuState extends State<EndDrawerMenu> {
                         profileBloc.add(ResetState());
                       });
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 50,
                       child: Row(
                         children: [
@@ -77,19 +83,24 @@ class _EndDrawerMenuState extends State<EndDrawerMenu> {
                   ),
                 );
               }),
-              Spacer(),
+              const Spacer(),
               InkWell(
                 onTap: () {
                   Auth.signOut();
                 },
-                child: Container(
+                child: const SizedBox(
                   height: 60,
-                  child: const Text(
+                  child: Text(
                     'Logout',
                     style: TextStyle(color: CAColors.white),
                   ),
                 ),
               ),
+              ElevatedButton(
+                  onPressed: () => showErrorDialog(
+                      context: context,
+                      message: "You have changed your password succesfully!"),
+                  child: const Text("Press")),
             ],
           ),
         ),

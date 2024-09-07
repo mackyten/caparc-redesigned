@@ -34,6 +34,7 @@ class _SignInScreenState extends State<SignInScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text(userBloc.state?.email??"NO EMAIL"),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Email'),
                   validator: (value) {

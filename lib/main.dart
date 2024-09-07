@@ -8,6 +8,7 @@ import 'package:caparc/blocs/search_bloc/search_bloc.dart';
 import 'package:caparc/blocs/upload_screen_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/firebase_options.dart';
+import 'package:caparc/presentation/ca_colors.dart';
 import 'package:caparc/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,21 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(useMaterial3: true),
+        theme: ThemeData(
+          useMaterial3: false,
+          primarySwatch: createMaterialColor(CAColors.accent),
+          bottomSheetTheme: const BottomSheetThemeData(
+            backgroundColor: CAColors.appBG,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(10),
+              ),
+            ),
+          ),
+          appBarTheme: const AppBarTheme(
+            foregroundColor: CAColors.accent,
+          ),
+        ),
         routes: caRoutes,
         initialRoute: '/',
       ),
