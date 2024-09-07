@@ -1,5 +1,4 @@
 import 'package:caparc/blocs/favorites_bloc/bloc.dart';
-import 'package:caparc/blocs/favorites_bloc/event.dart';
 import 'package:caparc/blocs/search_bloc/search_bloc.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
@@ -8,10 +7,8 @@ import 'package:caparc/common/widgets/favorite_item.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:caparc/data/models/project_model.dart';
-import 'package:caparc/data/models/user_model.dart';
 import 'package:caparc/presentation/screens/document_preview/screen.dart';
 import 'package:caparc/services/firestore_service/create_service.dart';
-import 'package:caparc/services/firestore_service/firestore_service.dart';
 import 'package:caparc/services/firestore_service/query_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,9 +99,11 @@ class _SearchScreenState extends State<SearchScreen> {
   void _onLikeTap(ProjectModel project, String query) async {
     FirestoreCreateServiceInterface iCreatService = FirestoreCreateService();
     final result = await iCreatService.toggleLike(project.id, currentUser!.id);
-    searchBloc.add(
-      SearchTitle(title: query),
-    );
+    if (result) {
+      searchBloc.add(
+        SearchTitle(title: query),
+      );
+    }
     // favoriteBloc.add(
     //   RemoveFavorite(
     //     project.id,

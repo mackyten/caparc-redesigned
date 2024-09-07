@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/presentation/screens/auth_screen/sign_in.dart';
 import 'package:caparc/presentation/screens/landing_page/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,10 +18,21 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   late UserBloc userBloc;
+  StreamSubscription<User?>? authSubscription;
 
   @override
   void initState() {
     userBloc = context.read<UserBloc>();
+    authSubscription = FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null && user.emailVerified) {
+        if (userBloc.state != null && user.email != userBloc.state!.email) {
+          // Email has changed, and it's verified
+          if (kDebugMode) {
+            print("USER HAS VERIFIED NEW EMAIL!");
+          }
+        }
+      }
+    });
     super.initState();
   }
 
@@ -27,21 +41,33 @@ class _WrapperState extends State<Wrapper> {
     return BlocBuilder<UserBloc, UserState?>(
         bloc: userBloc,
         builder: (BuildContext context, currentUser) {
-          // if (currentUser == null) {
-          //   return const SignInScreen();
-          // } else {
-          //   return const LandingPage();
-          // }
-
           return StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData && currentUser != null) {
+              if (snapshot.hasData &&
+                  currentUser != null &&
+                  snapshot.data!.emailVerified) {
                 // User is signed in
-                return LandingPage();
+                return const LandingPage();
+              } else if (snapshot.hasData &&
+                  currentUser != null &&
+                  !snapshot.data!.emailVerified) {
+                return const Text("Please verify your email first");
+              } else if (currentUser != null &&
+                  snapshot.hasData &&
+                  snapshot.data!.emailVerified &&
+                  snapshot.data?.email != currentUser.email) {
+                return Material(
+                  child: Center(
+                    child: Text("Should update userBloc first \n"
+                        "snapshot.hasData:${snapshot.hasData}\n"
+                        "snapshot.data!.emailVerified: ${snapshot.data!.emailVerified}\n"
+                        "snapshot.data?.email != currentUser?.email: ${snapshot.data?.email != currentUser.email}"),
+                  ),
+                );
               } else {
                 // User is not signed in
-                return SignInScreen();
+                return const SignInScreen();
               }
             },
           );

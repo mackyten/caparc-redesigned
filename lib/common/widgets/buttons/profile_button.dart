@@ -1,4 +1,3 @@
-import 'package:caparc/common/values.dart';
 import 'package:caparc/presentation/ca_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,9 +64,9 @@ class ProfileButton extends StatelessWidget {
         elevation: 5,
       ),
       child: isLoading == true
-          ? Container(
+          ? const SizedBox(
               width: double.infinity,
-              child: const SizedBox(
+              child: SizedBox(
                 height: 22,
                 width: 22,
                 child: CircularProgressIndicator.adaptive(

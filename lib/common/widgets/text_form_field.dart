@@ -24,6 +24,8 @@ class CAFormField {
     TextInputType? keyboardType,
     TextInputAction? textInputAction,
     TextCapitalization? textCapitalization,
+    FocusNode? focusNode,
+    bool? autoFocus,
   }) {
     return CATextFormField(
       labelText: labelText,
@@ -40,6 +42,8 @@ class CAFormField {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       textCapitalization: textCapitalization,
+      focusNode: focusNode,
+      autoFocus: autoFocus,
     );
   }
 
@@ -116,13 +120,14 @@ class CAFormField {
 
 class CATextFormField extends StatefulWidget {
   final String? labelText;
-  final String? Function(String?)? validator;
+  final String? Function(String? validator)? validator;
   final String? initialValue;
   final TextEditingController? controller;
   final Widget? prefix;
   final Function(String? val)? onChange;
   final bool? enabled;
   final int? minLine;
+  final int? maxLines;
   final Function(String val)? onFieldSubmitted;
   final String? helperText;
   final String? hintText;
@@ -136,30 +141,40 @@ class CATextFormField extends StatefulWidget {
   final bool? isPicker;
   final List<dynamic>? pickerItems;
   final dynamic initialPickedItem;
+  final FocusNode? focusNode;
+  final bool? autoFocus;
+  final bool? enableSuggestions;
+  final bool? autocorrect;
+  final bool? obscureText;
 
-  const CATextFormField({
-    super.key,
-    this.labelText,
-    this.validator,
-    this.initialValue,
-    this.controller,
-    this.onChange,
-    this.prefix,
-    this.enabled,
-    this.minLine = 1,
-    this.onFieldSubmitted,
-    this.helperText,
-    this.hintText,
-    this.keyboardType,
-    this.textInputAction,
-    this.textCapitalization = TextCapitalization.none,
-    this.datePicker = false,
-    this.onDateChanged,
-    this.onItemPicked,
-    this.isPicker,
-    this.pickerItems,
-    this.initialPickedItem,
-  });
+  const CATextFormField(
+      {super.key,
+      this.labelText,
+      this.validator,
+      this.initialValue,
+      this.controller,
+      this.onChange,
+      this.prefix,
+      this.enabled,
+      this.minLine,
+      this.maxLines,
+      this.onFieldSubmitted,
+      this.helperText,
+      this.hintText,
+      this.keyboardType,
+      this.textInputAction,
+      this.textCapitalization = TextCapitalization.none,
+      this.datePicker = false,
+      this.onDateChanged,
+      this.onItemPicked,
+      this.isPicker,
+      this.pickerItems,
+      this.initialPickedItem,
+      this.focusNode,
+      this.autoFocus,
+      this.enableSuggestions,
+      this.autocorrect,
+      this.obscureText});
 
   @override
   State<CATextFormField> createState() => _CATextFormFieldState();
@@ -215,16 +230,21 @@ class _CATextFormFieldState extends State<CATextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: widget.autoFocus ?? false,
+      focusNode: widget.focusNode,
       keyboardType: widget.keyboardType,
       controller: _controller,
       enabled: isEnabled(),
       onChanged: widget.onChange,
       minLines: widget.minLine,
-      maxLines: widget.minLine,
+      maxLines: widget.maxLines,
       onFieldSubmitted: widget.onFieldSubmitted,
       textInputAction: widget.textInputAction,
-      textCapitalization: TextCapitalization.words,
+      textCapitalization: widget.textCapitalization ?? TextCapitalization.words,
+      enableSuggestions: widget.enableSuggestions ?? true,
+      autocorrect: widget.autocorrect ?? true,
       cursorColor: CAColors.accent,
+      obscureText: widget.obscureText ?? false,
       style: GoogleFonts.poppins(
           color: isEnabled() == false
               ? CAColors.text

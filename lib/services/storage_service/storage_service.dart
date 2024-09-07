@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:caparc/services/storage_service/query_service.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 class StorageService implements StorageServiceInterface {
@@ -68,8 +69,10 @@ class FileService {
         },
       );
     } on DioException catch (e) {
-      print("ERROR downloading: $filename");
-      print(e);
+      if (kDebugMode) {
+        print("ERROR downloading: $filename");
+        print(e);
+      }
     }
   }
 

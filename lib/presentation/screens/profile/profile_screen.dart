@@ -57,7 +57,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               isLoading: state.isSubmitting,
               onPressed: () {
                 if (state.isEditting && formKey.currentState!.validate()) {
-                  //profileBloc.add(SetEdit());
                   profileBloc.add(
                     Submit(
                         data: dataCopy,
@@ -263,8 +262,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _contentItem(String title, IconData iconData, String value) {
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: 38,
+      padding: const EdgeInsets.only(
+        bottom: 30,
+        top: 30,
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.black12),
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
