@@ -1,6 +1,6 @@
 import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/common/values.dart';
-import 'package:caparc/data/models/project_model.dart';
+import 'package:caparc/common/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 

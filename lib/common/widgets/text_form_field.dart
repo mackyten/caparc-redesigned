@@ -1,7 +1,8 @@
 import 'package:caparc/common/values.dart';
 import 'package:caparc/common/widgets/buttons/profile_button.dart';
 import 'package:caparc/common/widgets/spacers.dart';
-import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/common/ca_colors.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -116,6 +117,15 @@ class CAFormField {
       initialPickedItem: initialPickedItem,
     );
   }
+
+  static Widget filePickerField(
+      {required Function(PlatformFile file) onPicked, String? initialValue}) {
+    return CATextFormField(
+      isFilePicker: true,
+      initialValue: initialValue,
+      onPicked: onPicked,
+    );
+  }
 }
 
 class CATextFormField extends StatefulWidget {
@@ -147,34 +157,40 @@ class CATextFormField extends StatefulWidget {
   final bool? autocorrect;
   final bool? obscureText;
 
-  const CATextFormField(
-      {super.key,
-      this.labelText,
-      this.validator,
-      this.initialValue,
-      this.controller,
-      this.onChange,
-      this.prefix,
-      this.enabled,
-      this.minLine,
-      this.maxLines,
-      this.onFieldSubmitted,
-      this.helperText,
-      this.hintText,
-      this.keyboardType,
-      this.textInputAction,
-      this.textCapitalization = TextCapitalization.none,
-      this.datePicker = false,
-      this.onDateChanged,
-      this.onItemPicked,
-      this.isPicker,
-      this.pickerItems,
-      this.initialPickedItem,
-      this.focusNode,
-      this.autoFocus,
-      this.enableSuggestions,
-      this.autocorrect,
-      this.obscureText});
+  final bool? isFilePicker;
+  final Function(PlatformFile file)? onPicked;
+
+  const CATextFormField({
+    super.key,
+    this.labelText,
+    this.validator,
+    this.initialValue,
+    this.controller,
+    this.onChange,
+    this.prefix,
+    this.enabled,
+    this.minLine,
+    this.maxLines,
+    this.onFieldSubmitted,
+    this.helperText,
+    this.hintText,
+    this.keyboardType,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.datePicker = false,
+    this.onDateChanged,
+    this.onItemPicked,
+    this.isPicker,
+    this.pickerItems,
+    this.initialPickedItem,
+    this.focusNode,
+    this.autoFocus,
+    this.enableSuggestions,
+    this.autocorrect,
+    this.obscureText,
+    this.isFilePicker,
+    this.onPicked,
+  });
 
   @override
   State<CATextFormField> createState() => _CATextFormFieldState();
@@ -196,7 +212,7 @@ class _CATextFormFieldState extends State<CATextFormField> {
       assert(widget.onDateChanged != null, "onPickedDate is required.");
     } else if (widget.isPicker == true) {
       assert(widget.onItemPicked != null, "onItemPicked is required.");
-      assert(widget.pickerItems != null || widget.pickerItems!.isNotEmpty,
+      assert(widget.pickerItems != null && widget.pickerItems!.isNotEmpty,
           "Please add pick items");
 
       if (widget.initialPickedItem != null) {
@@ -252,7 +268,9 @@ class _CATextFormFieldState extends State<CATextFormField> {
       decoration: InputDecoration(
         helperText: widget.helperText,
         hintText: widget.hintText,
-        prefixIcon: widget.prefix,
+        prefixIcon: widget.isFilePicker == true
+            ? const Icon(Icons.attach_file)
+            : widget.prefix,
         labelText: widget.labelText,
         labelStyle: GoogleFonts.poppins(
           color: isEnabled() == false ? CAColors.text : CAColors.accent,
@@ -267,6 +285,7 @@ class _CATextFormFieldState extends State<CATextFormField> {
               )
             : null,
         suffixIconColor: isEnabled() == true ? CAColors.accent : CAColors.text,
+        prefixIconColor: isEnabled() == true ? CAColors.accent : CAColors.text,
         hintStyle: GoogleFonts.poppins(
             color: isEnabled() == true ? CAColors.accent : CAColors.text),
         enabledBorder: const OutlineInputBorder(),
@@ -276,7 +295,9 @@ class _CATextFormFieldState extends State<CATextFormField> {
         border: const OutlineInputBorder(),
       ),
       validator: widget.validator,
-      readOnly: (widget.datePicker == true || widget.isPicker == true),
+      readOnly: (widget.datePicker == true ||
+          widget.isPicker == true ||
+          widget.isFilePicker == true),
       onTap: onTap,
     );
   }
@@ -383,6 +404,22 @@ class _CATextFormFieldState extends State<CATextFormField> {
           isPicking = false;
         });
       }
+    } else if (widget.isFilePicker == true) {
+      print("FILE PICKER");
+      pickFile();
+    }
+  }
+
+  void pickFile() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+
+    if (result != null) {
+      if (widget.onPicked != null) {
+        widget.onPicked!(result.files.first);
+      }
+    } else {
+      // User canceled the picker
     }
   }
 }

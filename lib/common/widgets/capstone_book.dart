@@ -1,8 +1,8 @@
 import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/common/values.dart';
-import 'package:caparc/data/models/project_model.dart';
-import 'package:caparc/presentation/ca_colors.dart';
-import 'package:caparc/presentation/screens/document_preview/screen.dart';
+import 'package:caparc/common/models/project_model.dart';
+import 'package:caparc/common/ca_colors.dart';
+import 'package:caparc/features/document_preview/screen.dart';
 import 'package:caparc/services/firestore_service/create_service.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';

@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -43,8 +44,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB1AZMJp_hAD9HfCcB4B41Dr090idOCMkQ',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_WEB']!,
     appId: '1:922033622398:web:b60c66cf9f5710955b772f',
     messagingSenderId: '922033622398',
     projectId: 'v2-cap-arc-d2d54',
@@ -52,16 +53,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'v2-cap-arc-d2d54.appspot.com',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDrRFbldBwhWyODmoR-ajb16bwnjdxzC5w',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_ANDROID']!,
     appId: '1:922033622398:android:90d9a16ccf720cd85b772f',
     messagingSenderId: '922033622398',
     projectId: 'v2-cap-arc-d2d54',
     storageBucket: 'v2-cap-arc-d2d54.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCKVpyN2ThH4le1xoeHGdM81WfazKBry2k',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_IOS']!,
     appId: '1:922033622398:ios:8a0f89348ab0a4c85b772f',
     messagingSenderId: '922033622398',
     projectId: 'v2-cap-arc-d2d54',
@@ -69,8 +70,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.caparc',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCKVpyN2ThH4le1xoeHGdM81WfazKBry2k',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_MACOS']!,
     appId: '1:922033622398:ios:52c6ee4a15ffb6ff5b772f',
     messagingSenderId: '922033622398',
     projectId: 'v2-cap-arc-d2d54',

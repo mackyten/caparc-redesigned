@@ -1,4 +1,4 @@
-import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/common/models/user_model.dart';
 
 class Fullname {
   static buildFullname(UserModel item) {

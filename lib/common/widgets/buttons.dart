@@ -1,4 +1,4 @@
-import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/common/ca_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 
@@ -192,7 +192,7 @@ class Buttons {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   height: 40,
-                  width: 100,
+                  width: 120,
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: Center(
                     child: Text(

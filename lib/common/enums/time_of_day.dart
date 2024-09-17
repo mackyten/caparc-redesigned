@@ -1,5 +1,5 @@
 import 'package:caparc/common/values.dart';
-import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/common/ca_colors.dart';
 import 'package:flutter/material.dart';
 
 enum TimeOfDay { morning, afternoon, evening }

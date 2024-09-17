@@ -1,6 +1,6 @@
 //class CreateService extends FirestoreService implements CreateServiceInterface
 
-import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/common/models/user_model.dart';
 import 'package:caparc/services/firestore_service/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

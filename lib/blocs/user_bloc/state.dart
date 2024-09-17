@@ -1,7 +1,7 @@
 import 'package:caparc/common/methods/fullname_builder.dart';
 import 'package:caparc/common/enums/account_status.dart';
 import 'package:caparc/common/models/course_model.dart';
-import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/common/models/user_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 

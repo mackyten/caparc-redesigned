@@ -51,6 +51,7 @@ dependencies:
   easy_pdf_viewer: ^1.0.8
   flutter_windowmanager: ^0.2.0
   google_fonts: 6.1.0
+  flutter_dotenv: ^5.1.0
 
 
 dev_dependencies:
@@ -79,6 +80,7 @@ flutter:
   assets:
     - assets/png/
     - assets/svg/
+    - .env
     
   #   - images/a_dot_ham.jpeg
 
