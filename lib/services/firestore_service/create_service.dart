@@ -1,4 +1,4 @@
-import 'package:caparc/data/models/project_model.dart';
+import 'package:caparc/common/models/project_model.dart';
 import 'package:caparc/services/firestore_service/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

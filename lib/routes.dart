@@ -1,8 +1,8 @@
-import 'package:caparc/presentation/screens/account_security/account_security.dart';
-import 'package:caparc/presentation/screens/auth_screen/register.dart';
-import 'package:caparc/presentation/screens/profile/profile_screen.dart';
+import 'package:caparc/features/account_security/account_security.dart';
+import 'package:caparc/features/auth_screen/register.dart';
+import 'package:caparc/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'presentation/screens/auth_screen/wrapper.dart';
+import 'features/auth_screen/wrapper.dart';
 
 final Map<String, Widget Function(BuildContext)> caRoutes = {
   '/': (context) => const Wrapper(),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../presentation/ca_colors.dart';
+import '../../ca_colors.dart';
 import '../spacers.dart';
 import '../text_form_field.dart';
 

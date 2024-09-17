@@ -1,5 +1,5 @@
-import 'package:caparc/data/models/project_model.dart';
-import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/common/models/project_model.dart';
+import 'package:caparc/common/models/user_model.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable

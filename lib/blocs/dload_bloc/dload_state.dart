@@ -14,8 +14,3 @@ class DloadState {
     return DloadState(items: items ?? this.items);
   }
 }
-
-// final class DloadInitial extends DloadState {
-
-
-// }

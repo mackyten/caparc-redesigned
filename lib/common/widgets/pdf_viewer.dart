@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:caparc/common/values.dart';
-import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/common/ca_colors.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
@@ -35,16 +35,21 @@ class _CAPDFViewerState extends State<CAPDFViewer> {
   }
 
   Future<void> _preventScreenshots() async {
-    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    if (Platform.isAndroid) {
+      await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    }
   }
 
   void _allowScreenshots() {
-    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    if (Platform.isAndroid) {
+      FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    }
   }
 
   @override
   void dispose() {
     _allowScreenshots();
+
     super.dispose();
   }
 

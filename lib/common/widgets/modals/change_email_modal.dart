@@ -4,12 +4,11 @@ import 'package:caparc/common/widgets/dialogs/success_dialog.dart';
 import 'package:caparc/common/widgets/modals/01custom_modal.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
-import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/common/models/user_model.dart';
 import 'package:caparc/services/auth_service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'password_reauth_modal.dart';
 
-//angelo@mailinator.com
 void showChangeEmailModal(
   BuildContext context,
   UserModel user,

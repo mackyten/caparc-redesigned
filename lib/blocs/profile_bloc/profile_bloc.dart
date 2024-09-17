@@ -1,7 +1,7 @@
 
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/events.dart';
-import 'package:caparc/data/models/user_model.dart';
+import 'package:caparc/common/models/user_model.dart';
 import 'package:caparc/services/firestore_service/update_service.dart';
 import 'package:caparc/services/storage_service/create_service.dart';
 import 'package:flutter/material.dart';

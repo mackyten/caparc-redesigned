@@ -1,11 +1,10 @@
-import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/common/ca_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 double bodyPadding = 16;
 double insidePadding = 12;
 double iconsSize = 24;
-// EdgeInsets borderRadius = const EdgeInsets.all(5);
 Size avatarSize = const Size(60, 60);
 
 double titleSize = 18;

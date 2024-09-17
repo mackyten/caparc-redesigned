@@ -1,4 +1,4 @@
-import 'package:caparc/data/models/project_model.dart';
+import 'package:caparc/common/models/project_model.dart';
 import 'package:caparc/services/firestore_service/query_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

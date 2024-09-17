@@ -1,23 +1,22 @@
-import 'package:caparc/bloc/counter_bloc.dart';
 import 'package:caparc/blocs/bottom_nav_bar_bloc/bloc.dart';
 import 'package:caparc/blocs/dload_bloc/dload_bloc.dart';
 import 'package:caparc/blocs/favorites_bloc/bloc.dart';
-import 'package:caparc/blocs/home_screen_bloc/bloc.dart';
+import 'package:caparc/blocs/home_bloc/bloc.dart';
 import 'package:caparc/blocs/profile_bloc/profile_bloc.dart';
 import 'package:caparc/blocs/search_bloc/search_bloc.dart';
-import 'package:caparc/blocs/upload_screen_bloc/bloc.dart';
+import 'package:caparc/blocs/upload_bloc/bloc.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
 import 'package:caparc/firebase_options.dart';
-import 'package:caparc/presentation/ca_colors.dart';
+import 'package:caparc/common/ca_colors.dart';
 import 'package:caparc/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
-  // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize Firebase
+  await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -33,7 +32,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => CounterBloc()),
         BlocProvider(create: (context) => BottomNavBloc()),
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (context) => UploadBloc()),
