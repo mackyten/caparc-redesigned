@@ -12,7 +12,6 @@ import 'package:caparc/common/ca_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:caparc/blocs/user_bloc/bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -50,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     TimeOfDayModel timeOfDay = TimeOfDayModel.getTimeOfDay(
-        DateTime.now().add(const Duration(hours: -2)));
+      DateTime.now(),
+    );
     return Scaffold(
       body: BlocBuilder<HomeScreenBloc, HomeScreenState?>(
         builder: (context, state) {
@@ -64,12 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: EdgeInsets.all(bodyPadding),
                   width: screenSize.width,
-                  constraints: const BoxConstraints(maxHeight: 206),
+                  constraints: const BoxConstraints(maxHeight: 300),
                   decoration: BoxDecoration(
-                    // gradient: LinearGradient(
-                    //     colors: timeOfDay.colors,
-                    //     begin: Alignment.topCenter,
-                    //     end: Alignment.bottomCenter),
+                    gradient: LinearGradient(
+                        colors: timeOfDay.colors,
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter),
                     borderRadius: BorderRadius.circular(16),
                     color: Colors.white,
                     boxShadow: defaultBoxShadow,
@@ -78,206 +78,191 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(16),
                         bottomLeft: Radius.circular(16)),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 15,
-                          child: SizedBox(
-                            height: 180,
-                            width: screenSize.width * .70,
-                            child: SvgPicture.asset(
-                              timeOfDay.svg,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(insidePadding),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    gradient: const LinearGradient(colors: [
-                                      Colors.white38,
-                                      Colors.white24,
-                                      Colors.white12,
-                                    ])),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: _personalProfile,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                    child: Padding(
+                      padding: EdgeInsets.all(insidePadding),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                gradient: const LinearGradient(colors: [
+                                  Colors.white38,
+                                  Colors.white24,
+                                  Colors.white12,
+                                ])),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: _personalProfile,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        currentUser.getFullname(),
+                                        style: titleStyle,
+                                      ),
+                                      Row(
                                         children: [
-                                          Text(
-                                            currentUser.getFullname(),
-                                            style: titleStyle,
+                                          Icon(
+                                            Icons.badge,
+                                            color: CAColors.secondary,
+                                            size: iconsSize,
                                           ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.badge,
-                                                color: CAColors.secondary,
-                                                size: iconsSize,
-                                              ),
-                                              const SizedBox(
-                                                width: 2,
-                                              ),
-                                              SizedBox(
-                                                width: _personalProfile -
-                                                    iconsSize -
-                                                    2,
-                                                child: Text(
-                                                  currentUser.idNumber,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontSize: detailSize,
-                                                    color: CAColors.accent,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
+                                          const SizedBox(
+                                            width: 2,
                                           ),
-                                          Row(
-                                            children: [
-                                              accountStatus.icon,
-                                              const SizedBox(
-                                                width: 2,
+                                          SizedBox(
+                                            width: _personalProfile -
+                                                iconsSize -
+                                                2,
+                                            child: Text(
+                                              currentUser.idNumber,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: detailSize,
+                                                color: CAColors.accent,
                                               ),
-                                              SizedBox(
-                                                width: _personalProfile -
-                                                    iconsSize -
-                                                    2,
-                                                child: Text(
-                                                  accountStatus.stringValue,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontSize: detailSize,
-                                                    color: CAColors.accent,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              timeOfDay.icon,
-                                              const SizedBox(
-                                                width: 2,
-                                              ),
-                                              SizedBox(
-                                                width: _personalProfile -
-                                                    iconsSize -
-                                                    2,
-                                                child: Text(
-                                                  timeOfDay.greeting,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontSize: detailSize,
-                                                    color: CAColors.accent,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                            ),
+                                          )
                                         ],
                                       ),
+                                      Row(
+                                        children: [
+                                          accountStatus.icon,
+                                          const SizedBox(
+                                            width: 2,
+                                          ),
+                                          SizedBox(
+                                            width: _personalProfile -
+                                                iconsSize -
+                                                2,
+                                            child: Text(
+                                              accountStatus.stringValue,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: detailSize,
+                                                color: CAColors.accent,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          timeOfDay.icon,
+                                          const SizedBox(
+                                            width: 2,
+                                          ),
+                                          SizedBox(
+                                            width: _personalProfile -
+                                                iconsSize -
+                                                2,
+                                            child: Text(
+                                              timeOfDay.greeting,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: detailSize,
+                                                color: CAColors.accent,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: avatarSize.width,
+                                  height: avatarSize.height,
+                                  decoration: BoxDecoration(
+                                    color: CAColors.deactivated,
+                                    borderRadius: BorderRadius.circular(
+                                      avatarSize.width,
                                     ),
-                                    Container(
-                                      width: avatarSize.width,
-                                      height: avatarSize.height,
-                                      decoration: BoxDecoration(
-                                          color: CAColors.deactivated,
-                                          borderRadius: BorderRadius.circular(
-                                              avatarSize.width)),
-                                    )
+                                    image: currentUser.avatarLink == null
+                                        ? null
+                                        : DecorationImage(
+                                          fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                                currentUser.avatarLink!),
+                                          ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const Divider(),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(insidePadding),
+                                width: (screenSize.width / 2) -
+                                    ((bodyPadding + (insidePadding * 1.5))),
+                                decoration: BoxDecoration(
+                                    color: CAColors.secondary.withOpacity(1),
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow: defaultBoxShadow),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Approved Projects',
+                                      style: TextStyle(
+                                          fontSize: detailSize,
+                                          color: CAColors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text(
+                                      '${state?.myApprovedProjects.length ?? 0}',
+                                      style: TextStyle(
+                                          fontSize: titleSize,
+                                          color: CAColors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ],
                                 ),
                               ),
-                              const Divider(),
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(insidePadding),
-                                    width: (screenSize.width / 2) -
-                                        ((bodyPadding + (insidePadding * 1.5))),
-                                    decoration: BoxDecoration(
-                                        color:
-                                            CAColors.secondary.withOpacity(1),
-                                        borderRadius: BorderRadius.circular(8),
-                                        boxShadow: defaultBoxShadow),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Approved Projects',
-                                          style: TextStyle(
-                                              fontSize: detailSize,
-                                              color: CAColors.white,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-
-                                        ///TODO: Add real count
-                                        ///
-                                        Text(
-                                          '0',
-                                          style: TextStyle(
-                                              fontSize: titleSize,
-                                              color: CAColors.white,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      ],
+                              SizedBox(
+                                width: insidePadding,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(insidePadding),
+                                width: (screenSize.width / 2) -
+                                    ((bodyPadding + (insidePadding * 1.5))),
+                                decoration: BoxDecoration(
+                                  boxShadow: defaultBoxShadow,
+                                  color: CAColors.warning.withOpacity(1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Pending Projects',
+                                      style: TextStyle(
+                                          fontSize: detailSize,
+                                          color: CAColors.white,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: insidePadding,
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(insidePadding),
-                                    width: (screenSize.width / 2) -
-                                        ((bodyPadding + (insidePadding * 1.5))),
-                                    decoration: BoxDecoration(
-                                      boxShadow: defaultBoxShadow,
-                                      color: CAColors.warning.withOpacity(1),
-                                      borderRadius: BorderRadius.circular(8),
+                                    Text(
+                                      '${state?.myPendingProjects.length ?? 0}',
+                                      style: TextStyle(
+                                          fontSize: titleSize,
+                                          color: CAColors.white,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Pending Projects',
-                                          style: TextStyle(
-                                              fontSize: detailSize,
-                                              color: CAColors.white,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-
-                                        ///TODO: Add real count
-                                        ///
-                                        Text(
-                                          '0',
-                                          style: TextStyle(
-                                              fontSize: titleSize,
-                                              color: CAColors.white,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
+                                  ],
+                                ),
+                              ),
                             ],
-                          ),
-                        ),
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -254,6 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             userBloc.state!.accountStatus)
                         .stringValue,
                   ),
+                  const SizedBox(height: 60,)
                 ],
               ),
             ),
@@ -266,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         bottom: 30,
         top: 30,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: Colors.black12),
         ),

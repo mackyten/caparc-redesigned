@@ -202,7 +202,7 @@ class _UploadScreenState extends State<UploadScreen> {
     } else if (state.currentStep == 1) {
       if (_step2FormKey.currentState!.validate()) {
         uploadBloc.add(
-          AddDetails(data.approvedOn!, data.projectAbstract!, data.pickedFile),
+          AddDetails(data.approvedOn!, data.projectAbstract!, data.pickedFile, data.course!),
         );
       }
     } else {

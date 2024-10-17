@@ -54,6 +54,7 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
     project.approvedOn = event.approvedOn;
     project.projectAbstract = event.projectAbstract;
     project.pickedFile = event.pickedFile;
+    project.course = event.courseModel;
 
     emit(
       state.copyWith(data: project, currentStep: state.currentStep + 1),

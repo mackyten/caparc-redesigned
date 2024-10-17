@@ -61,12 +61,15 @@ class _VerificationFormState extends State<VerificationForm> {
           ),
           Form(
             key: widget.formKey,
-            child: CATextFormField(
+            child: TextFormField(
               enabled: !widget.isVerifying,
               initialValue: widget.initialData,
-              labelText: "Capstone Title",
-              minLine: 3,
-              onChange: widget.onChange,
+              decoration: const InputDecoration(
+                labelText: "Capstone Title",
+              ),
+              minLines: 3,
+              maxLines: 3,
+              onChanged: widget.onChange,
               validator: widget.validator,
             ),
           ),

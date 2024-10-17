@@ -30,15 +30,17 @@ void showPasswordReauthModal(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Spacers.formFieldSpacers(),
-                      CATextFormField(
+                      TextFormField(
                         maxLines: 1,
                         keyboardType: TextInputType.visiblePassword,
-                        labelText: "Password",
+                        decoration: const InputDecoration(
+                          labelText: "Password",
+                        ),
                         enableSuggestions: false,
                         textCapitalization: TextCapitalization.none,
                         autocorrect: false,
                         obscureText: true,
-                        onChange: (val) {
+                        onChanged: (val) {
                           setState(() => password = val);
                         },
                       ),

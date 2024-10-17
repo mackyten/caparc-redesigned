@@ -21,7 +21,12 @@ class CourseModel extends BaseModel {
         code: json["code"]);
   }
 
+  @override
   Map<String, dynamic> toJson() {
-    return {'id': id};
+    return {
+      'id': id,
+      'description': description,
+      'code': code,
+    };
   }
 }

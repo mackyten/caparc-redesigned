@@ -1,7 +1,9 @@
 import 'package:caparc/common/ca_colors.dart';
 import 'package:caparc/common/models/project_model.dart';
 import 'package:caparc/common/values.dart';
+import 'package:caparc/common/widgets/course_picker/course_picker.dart';
 import 'package:caparc/common/widgets/date_form_field.dart';
+import 'package:caparc/common/widgets/file_picker.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:flutter/foundation.dart';
@@ -65,15 +67,22 @@ class _DetailsFormState extends State<DetailsForm> {
             key: widget.formKey,
             child: Column(
               children: [
-                CAFormField.textField(
-                  labelText: "Capstone Title",
+                // CAFormField.textField(
+                //   labelText: "Capstone Title",
+
+                // ),
+                TextFormField(
                   enabled: false,
                   initialValue: data.title,
+                  decoration: const InputDecoration(
+                    label: Text("Capstone Title,"),
+                  ),
                 ),
                 Spacers.formFieldSpacers(),
-                CAFormField.dateField(
-                  labelText: "Date Approved",
-                  onDateChanged: (val) {
+
+                CADateFormField(
+                  label: 'Date Approved',
+                  onPicked: (val) {
                     setState(() {
                       data.approvedOn = val;
                     });
@@ -81,17 +90,35 @@ class _DetailsFormState extends State<DetailsForm> {
                   },
                   initialValue: data.approvedOn,
                   validator: (value) {
-                    if (data.title == null || data.title!.isEmpty) {
+                    if (data.approvedOn == null) {
                       return "Please enter when your capstone was approved.";
                     }
                     return null;
                   },
                 ),
                 Spacers.formFieldSpacers(),
-                CAFormField.textField(
-                  labelText: "Abstract",
+                CoursePicker(
+                    initialValue: data.course,
+                    validator: (val) {
+                      return val == null || val.isEmpty
+                          ? "Please enter your course / program."
+                          : null;
+                    },
+                    onItemPicked: (course) {
+                      setState(() {
+                        data.course = course;
+                      });
+                      widget.onChanged(data);
+                    }),
+                Spacers.formFieldSpacers(),
+
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: "Abstract",
+                  ),
                   initialValue: data.projectAbstract,
-                  minLine: 4,
+                  minLines: 4,
+                  maxLines: 10,
                   validator: (value) {
                     if (data.projectAbstract == null ||
                         data.projectAbstract!.isEmpty) {
@@ -99,7 +126,7 @@ class _DetailsFormState extends State<DetailsForm> {
                     }
                     return null;
                   },
-                  onChange: (val) {
+                  onChanged: (val) {
                     setState(() {
                       data.projectAbstract = val;
                     });
@@ -107,7 +134,7 @@ class _DetailsFormState extends State<DetailsForm> {
                   },
                 ),
                 Spacers.formFieldSpacers(),
-                CAFormField.filePickerField(
+                CAFilePicker(
                   onPicked: (file) {
                     setState(() {
                       data.pickedFile = file;
