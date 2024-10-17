@@ -36,18 +36,18 @@ void showChangePasswordModal({required BuildContext context}) {
                     style: titleStyle,
                   ),
                   Spacers.formFieldSpacers(),
-                  CATextFormField(
-                    labelText: "New password",
-                    onChange: (val) {
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: "New Password"),
+                    onChanged: (val) {
                       setState(() {
                         password = val;
                       });
                     },
                   ),
                   Spacers.formFieldSpacers(),
-                  CATextFormField(
-                    labelText: "Confirm password",
-                    onChange: (val) {
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: "Confirm Password"),
+                    onChanged: (val) {
                       setState(() {
                         confirmPassword = val;
                       });

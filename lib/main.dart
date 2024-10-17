@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +57,32 @@ class MyApp extends StatelessWidget {
           ),
           appBarTheme: const AppBarTheme(
             foregroundColor: CAColors.accent,
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(),
+            floatingLabelAlignment: FloatingLabelAlignment.start,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: CAColors.accent),
+            ),
+            border: OutlineInputBorder(),
+          ),
+          textTheme: GoogleFonts.poppinsTextTheme(
+            ThemeData.light().textTheme.copyWith(
+                  titleMedium: const TextStyle(
+                    color: CAColors.accent,
+                  ),
+                  bodySmall: const TextStyle(
+                    color: CAColors.accent,
+                  ),
+                  bodyMedium: const TextStyle(
+                    color: CAColors.accent,
+                  ),
+                ),
           ),
         ),
         routes: caRoutes,

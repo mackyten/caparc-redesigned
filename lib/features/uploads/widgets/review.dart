@@ -2,6 +2,7 @@ import 'package:caparc/common/ca_colors.dart';
 import 'package:caparc/common/methods/file_size_builder.dart';
 import 'package:caparc/common/models/project_model.dart';
 import 'package:caparc/common/values.dart';
+import 'package:caparc/common/widgets/file_picker.dart';
 import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:flutter/foundation.dart';
@@ -95,7 +96,7 @@ class _UploadReviewState extends State<UploadReview> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CAFormField.filePickerField(
+                CAFilePicker(
                     onPicked: (_) {},
                     initialValue:
                         widget.data.pickedFile?.name ?? "No file selected"),

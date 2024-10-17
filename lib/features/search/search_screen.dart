@@ -47,14 +47,16 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 children: [
                   Spacers.formFieldSpacers(),
-                  CATextFormField(
+                  TextFormField(
                     initialValue: state.query,
-                    hintText: "Search for title",
+                    decoration: const InputDecoration(
+                      hintText: "Search for title",
+                      prefix: Icon(
+                        MingCuteIcons.mgc_search_2_fill,
+                      ),
+                    ),
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.search,
-                    prefix: const Icon(
-                      MingCuteIcons.mgc_search_2_fill,
-                    ),
                     onFieldSubmitted: (val) async {
                       // final x =
                       //     await iFirestoreService.getDocumentsByTitle(val);

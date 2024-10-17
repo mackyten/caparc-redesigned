@@ -4,6 +4,7 @@ import 'package:caparc/blocs/user_bloc/state.dart';
 import 'package:caparc/common/values.dart';
 import 'package:caparc/common/widgets/date_form_field.dart';
 import 'package:caparc/common/widgets/snackbar.dart';
+import 'package:caparc/common/widgets/spacers.dart';
 import 'package:caparc/common/widgets/text_form_field.dart';
 import 'package:caparc/common/enums/account_status.dart';
 import 'package:caparc/common/models/user_model.dart';
@@ -59,25 +60,32 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
             key: _formKey,
             child: Column(
               children: [
-                CATextFormField(
+                Spacers.formFieldSpacers(),
+                TextFormField(
                   controller: idNumber,
-                  labelText: 'ID Number',
+                  decoration: const InputDecoration(
+                    labelText: 'ID Number',
+                  ),
                   validator: _validator,
                 ),
                 SizedBox(
                   height: bodyPadding,
                 ),
-                CATextFormField(
+                TextFormField(
                   controller: email,
-                  labelText: 'Email',
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                  ),
                   validator: _validator,
                 ),
                 SizedBox(
                   height: bodyPadding,
                 ),
-                CATextFormField(
+                TextFormField(
                   controller: password,
-                  labelText: 'Password',
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                  ),
                   validator: _validator,
                 ),
                 SizedBox(
@@ -87,9 +95,11 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: CATextFormField(
+                      child: TextFormField(
                         controller: lastname,
-                        labelText: 'Lastname *',
+                        decoration: const InputDecoration(
+                          labelText: 'Lastname *',
+                        ),
                         validator: _validator,
                       ),
                     ),
@@ -97,9 +107,11 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                       width: bodyPadding,
                     ),
                     Expanded(
-                      child: CATextFormField(
+                      child: TextFormField(
                         controller: firstname,
-                        labelText: 'Firstname *',
+                        decoration: const InputDecoration(
+                          labelText: 'Firstname *',
+                        ),
                         validator: _validator,
                       ),
                     )
@@ -113,9 +125,11 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                   children: [
                     SizedBox(
                       width: screenSize.width * 0.20,
-                      child: CATextFormField(
+                      child: TextFormField(
                         controller: prefix,
-                        labelText: 'Prefix',
+                        decoration: const InputDecoration(
+                          labelText: 'Prefix',
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -123,18 +137,22 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                     ),
                     SizedBox(
                       width: screenSize.width * 0.20,
-                      child: CATextFormField(
+                      child: TextFormField(
                         controller: suffix,
-                        labelText: 'Suffix',
+                        decoration: const InputDecoration(
+                          labelText: 'Suffix',
+                        ),
                       ),
                     ),
                     SizedBox(
                       width: bodyPadding,
                     ),
                     Expanded(
-                      child: CATextFormField(
+                      child: TextFormField(
                         controller: middlename,
-                        labelText: 'Middle Name',
+                        decoration: const InputDecoration(
+                          labelText: 'Middle name',
+                        ),
                       ),
                     ),
                   ],
@@ -152,8 +170,11 @@ class _RegisterScreeenState extends State<RegisterScreeen> {
                 SizedBox(
                   height: bodyPadding,
                 ),
-                ElevatedButton(
-                    onPressed: _register, child: const Text('Register'))
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: _register, child: const Text('Register')),
+                )
               ],
             ),
           ),

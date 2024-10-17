@@ -22,13 +22,11 @@ class _EndDrawerMenuState extends State<EndDrawerMenu> {
 
   final List<EndDrawerItemModel> items = [
     EndDrawerItemModel(
-      onTap: () {},
       title: "Profile",
       icon: MingCuteIcons.mgc_user_3_fill,
       screen: "/home/profile",
     ),
     EndDrawerItemModel(
-      onTap: () {},
       title: "Account Security",
       icon: MingCuteIcons.mgc_lock_fill,
       screen: "/home/account-security",
@@ -51,10 +49,17 @@ class _EndDrawerMenuState extends State<EndDrawerMenu> {
             children: [
               ...List.generate(items.length, (i) {
                 final menu = items[i];
-                return item(menu.title, menu.icon);
+                return item(
+                  tag: menu.title,
+                  icon: menu.icon,
+                  onClicked: ()=> Navigator.of(context).pushNamed(menu.screen),
+                );
               }),
               const Spacer(),
-              item("Logout", MingCuteIcons.mgc_exit_fill),
+              item(
+                  tag: "Logout",
+                  icon: MingCuteIcons.mgc_exit_fill,
+                  onClicked: firebaseAuthService.signOut),
               SizedBox(
                 height: MediaQuery.of(context).padding.bottom,
               )
@@ -65,11 +70,12 @@ class _EndDrawerMenuState extends State<EndDrawerMenu> {
     );
   }
 
-  Widget item(String tag, IconData? icon) {
+  Widget item(
+      {required String tag, IconData? icon, required VoidCallback onClicked}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => firebaseAuthService.signOut(),
+        onTap: onClicked,
         child: SizedBox(
           height: 50,
           child: Row(

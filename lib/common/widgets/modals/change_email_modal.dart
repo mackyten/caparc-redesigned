@@ -40,20 +40,20 @@ void showChangeEmailModal(
                     style: titleStyle,
                   ),
                   Spacers.formFieldSpacers(),
-                  CATextFormField(
-                    labelText: "Current Email",
+                  TextFormField(
+                    autofocus: true,
+                    decoration: const InputDecoration(labelText: "Current Email"),
                     enabled: false,
                     initialValue: data.email,
-                    autoFocus: true,
                   ),
                   Spacers.formFieldSpacers(),
-                  CATextFormField(
+                  TextFormField(
                       maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
                       enableSuggestions: false,
                       textCapitalization: TextCapitalization.none,
                       autocorrect: false,
-                      labelText: "New Email",
+                    decoration: const InputDecoration(labelText: "New Email"),
                       validator: (validator) {
                         if (email != confirmEmail) {
                           return "Email does not matched";
@@ -62,19 +62,19 @@ void showChangeEmailModal(
                         }
                         return null;
                       },
-                      onChange: (val) {
+                      onChanged: (val) {
                         setState(() {
                           email = val;
                         });
                       }),
                   Spacers.formFieldSpacers(),
-                  CATextFormField(
+                  TextFormField(
                     maxLines: 1,
                     keyboardType: TextInputType.emailAddress,
                     enableSuggestions: false,
                     textCapitalization: TextCapitalization.none,
                     autocorrect: false,
-                    labelText: "Confirm New Email",
+                    decoration: const InputDecoration(labelText: "Confirm New Email"),
                     validator: (validator) {
                       if (email != confirmEmail) {
                         return "Email does not matched";
@@ -83,7 +83,7 @@ void showChangeEmailModal(
                       }
                       return null;
                     },
-                    onChange: (val) {
+                    onChanged: (val) {
                       setState(() {
                         confirmEmail = val;
                       });

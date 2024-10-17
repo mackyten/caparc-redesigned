@@ -1,3 +1,4 @@
+import 'package:caparc/common/models/course_model.dart';
 import 'package:caparc/common/models/project_model.dart';
 import 'package:caparc/common/models/user_model.dart';
 import 'package:file_picker/file_picker.dart';
@@ -40,11 +41,13 @@ final class AddDetails extends UploadEvent {
   final DateTime approvedOn;
   final String projectAbstract;
   final PlatformFile? pickedFile;
+  final CourseModel courseModel;
 
   AddDetails(
     this.approvedOn,
     this.projectAbstract,
-    this.pickedFile
+    this.pickedFile,
+    this.courseModel,
   );
 }
 
